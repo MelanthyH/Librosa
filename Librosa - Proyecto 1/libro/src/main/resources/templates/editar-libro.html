@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Librosa — Editar libro</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Lato:wght@300;400&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root {
+      --negro: #0a0a0a;
+      --negro-suave: #111111;
+      --rojo: #c0001a;
+      --rojo-hover: #e8001f;
+      --blanco: #f5f0eb;
+      --gris: #888888;
+      --borde: rgba(192, 0, 26, 0.2);
+    }
+
+    body {
+      background-color: var(--negro);
+      color: var(--blanco);
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+    }
+
+    /* ── NAVBAR ── */
+    .navbar {
+      background-color: rgba(10, 10, 10, 0.97);
+      border-bottom: 1px solid var(--borde);
+      padding: 1rem 2rem;
+    }
+
+    .navbar-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.7rem;
+      font-style: italic;
+      color: var(--blanco) !important;
+    }
+
+    .navbar-brand span { color: var(--rojo); }
+
+    .nav-link {
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gris) !important;
+      transition: color 0.3s;
+    }
+
+    .nav-link:hover { color: var(--blanco) !important; }
+
+    .navbar-toggler { border-color: var(--borde); }
+    .navbar-toggler-icon { filter: invert(1); }
+
+    .nav-user {
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--gris);
+    }
+
+    .nav-user span { color: var(--blanco); }
+
+    /* ── PÁGINA ── */
+    .page-wrapper {
+      padding: 3.5rem 0 5rem;
+    }
+
+    /* breadcrumb sencillo */
+    .breadcrumb-lib {
+      font-family: 'Cinzel', serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gris);
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .breadcrumb-lib a {
+      color: var(--gris);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .breadcrumb-lib a:hover { color: var(--blanco); }
+
+    .breadcrumb-lib .sep { color: var(--rojo); }
+
+    .breadcrumb-lib .actual { color: var(--blanco); }
+
+    /* ── ENCABEZADO DE PÁGINA ── */
+    .page-header {
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--borde);
+    }
+
+    .page-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--rojo);
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .page-label::before {
+      content: '';
+      width: 30px;
+      height: 1px;
+      background: var(--rojo);
+    }
+
+    .page-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      font-weight: 300;
+    }
+
+    .page-title em { font-style: italic; color: var(--rojo); }
+
+    /* ── CARD DEL FORMULARIO ── */
+    .form-card {
+      background-color: var(--negro-suave);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 2.5rem;
+    }
+
+    /* ── CAMPOS ── */
+    .form-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gris);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-control,
+    .form-select {
+      background-color: var(--negro);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--blanco);
+      border-radius: 0;
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      font-size: 0.9rem;
+      padding: 0.7rem 1rem;
+      transition: border-color 0.3s;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+      background-color: var(--negro);
+      border-color: var(--rojo);
+      color: var(--blanco);
+      box-shadow: none;
+      outline: none;
+    }
+
+    .form-control::placeholder {
+      color: rgba(136, 136, 136, 0.5);
+    }
+
+    .form-select option {
+      background-color: #1a1a1a;
+      color: var(--blanco);
+    }
+
+    textarea.form-control { resize: vertical; min-height: 110px; }
+
+    /* ── BARRA DE PROGRESO ── */
+    .progreso-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.4rem;
+    }
+
+    .progreso-numero {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      color: var(--rojo);
+    }
+
+    .progreso-bar-bg {
+      height: 3px;
+      background: rgba(255, 255, 255, 0.07);
+      width: 100%;
+    }
+
+    .progreso-bar-fill {
+      height: 3px;
+      background: var(--rojo);
+      transition: width 0.3s;
+    }
+
+    .progreso-hint {
+      font-size: 0.75rem;
+      color: var(--gris);
+      margin-top: 0.4rem;
+    }
+
+    input[type="number"]::-webkit-inner-spin-button { opacity: 0.4; }
+
+    .required-mark { color: var(--rojo); margin-left: 2px; }
+
+    .form-hint {
+      font-size: 0.75rem;
+      color: var(--gris);
+      margin-top: 0.35rem;
+    }
+
+    /* ── DIVISOR ── */
+    .form-divider {
+      border: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      margin: 2rem 0;
+    }
+
+    .divider-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gris);
+      margin-bottom: 1.2rem;
+    }
+
+    /* ── BOTONES ── */
+    .btn-primary-lib {
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--blanco);
+      background-color: var(--rojo);
+      border: none;
+      padding: 0.75rem 2rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-primary-lib:hover { background-color: var(--rojo-hover); }
+
+    .btn-secondary-lib {
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gris);
+      background-color: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 0.75rem 2rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-secondary-lib:hover {
+      color: var(--blanco);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--borde);
+      padding: 1.5rem 0;
+    }
+
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--gris);
+      margin: 0;
+    }
+
+    .footer-logo span { color: var(--rojo); }
+
+    .footer-text {
+      font-size: 0.75rem;
+      color: rgba(136, 136, 136, 0.5);
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="/">Lib<span>rosa</span></a>
+      <button class="navbar-toggler" type="button"
+              data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-lg-3 align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="mi-biblioteca.html">Mi Biblioteca</a></li>
+          <li class="nav-item"><a class="nav-link" href="perfil.html">Mi Perfil</a></li>
+          <li class="nav-item">
+            <span class="nav-user">Hola, <span>Angie</span></span>
+          </li>
+          <li class="nav-item ms-lg-2">
+            <a href="login.html" class="nav-link" style="color: var(--rojo) !important;">Cerrar sesión</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- CONTENIDO -->
+  <div class="page-wrapper">
+    <div class="container">
+
+      <!-- Breadcrumb -->
+      <div class="breadcrumb-lib">
+        <a href="mi-biblioteca.html">Mi Biblioteca</a>
+        <span class="sep">›</span>
+        <!--
+          Con Thymeleaf podrías mostrar el título del libro aquí:
+          <span th:text="${libro.titulo}">Cien años de soledad</span>
+          <span class="sep">›</span>
+        -->
+        <span class="actual">Editar libro</span>
+      </div>
+
+      <!-- Encabezado -->
+      <div class="page-header">
+        <p class="page-label">Modificar entrada</p>
+        <!--
+          Con Thymeleaf:
+          <h1 class="page-title">Editando: <em th:text="${libro.titulo}">Cien años de soledad</em></h1>
+        -->
+        <h1 class="page-title">Editando: <em>Cien años de soledad</em></h1>
+      </div>
+
+      <!-- Formulario -->
+      <!--
+        Con Thymeleaf:
+        <form th:action="@{/biblioteca/editar/{id}(id=${libro.id})}" th:object="${libroForm}" method="post">
+      -->
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="form-card">
+            <form action="#" method="post">
+
+              <!-- Campo oculto con el ID del libro -->
+              <!--
+                Con Thymeleaf: <input type="hidden" th:field="*{id}" />
+              -->
+              <input type="hidden" name="id" value="42" />
+
+              <!-- Información básica -->
+              <p class="divider-label">Información del libro</p>
+
+              <div class="row g-3 mb-3">
+                <div class="col-md-8">
+                  <label class="form-label" for="titulo">
+                    Título <span class="required-mark">*</span>
+                  </label>
+                  <!--
+                    Con Thymeleaf: th:field="*{titulo}"
+                    (th:field ya pone el name y el value automáticamente)
+                  -->
+                  <input type="text" id="titulo" name="titulo"
+                         class="form-control"
+                         value="Cien años de soledad"
+                         required />
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label" for="anio">
+                    Año de publicación
+                  </label>
+                  <!--
+                    Con Thymeleaf: th:field="*{anioPublicacion}"
+                  -->
+                  <input type="number" id="anio" name="anioPublicacion"
+                         class="form-control"
+                         value="1967"
+                         min="1000" max="2099" />
+                </div>
+              </div>
+
+              <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                  <label class="form-label" for="autor">
+                    Autor <span class="required-mark">*</span>
+                  </label>
+                  <!--
+                    Con Thymeleaf: th:field="*{autor}"
+                  -->
+                  <input type="text" id="autor" name="autor"
+                         class="form-control"
+                         value="Gabriel García Márquez"
+                         required />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="genero">
+                    Género <span class="required-mark">*</span>
+                  </label>
+                  <!--
+                    Con Thymeleaf, el select se llenaría dinámicamente y marcaría
+                    la opción correcta con th:selected:
+                    <select th:field="*{generoId}">
+                      <option th:each="g : ${generos}"
+                              th:value="${g.id}"
+                              th:text="${g.nombre}">
+                      </option>
+                    </select>
+                  -->
+                  <select id="genero" name="generoId" class="form-select" required>
+                    <option value="" disabled>Seleccionar género</option>
+                    <option value="1">Fantasía</option>
+                    <option value="2">Romance</option>
+                    <option value="3">Terror</option>
+                    <option value="4">Ciencia Ficción</option>
+                    <option value="5" selected>Clásico</option>
+                    <option value="6">Misterio</option>
+                    <option value="7">No ficción</option>
+                  </select>
+                </div>
+              </div>
+
+              <hr class="form-divider"/>
+
+              <!-- Estado y progreso -->
+              <p class="divider-label">Estado de lectura</p>
+
+              <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                  <label class="form-label" for="estado">
+                    Estado <span class="required-mark">*</span>
+                  </label>
+                  <!--
+                    Con Thymeleaf: th:field="*{estado}"
+                    El valor guardado se seleccionará automáticamente.
+                  -->
+                  <select id="estado" name="estado" class="form-select"
+                          required onchange="toggleProgreso(this.value)">
+                    <option value="" disabled>Seleccionar estado</option>
+                    <option value="PENDIENTE">📋 Pendiente</option>
+                    <option value="LEYENDO" selected>📖 En proceso</option>
+                    <option value="LEIDO">✅ Leído</option>
+                  </select>
+                </div>
+                <div class="col-md-3" id="campoTotalPaginas">
+                  <label class="form-label" for="totalPaginas">Total de páginas</label>
+                  <!--
+                    Con Thymeleaf: th:field="*{totalPaginas}"
+                  -->
+                  <input type="number" id="totalPaginas" name="totalPaginas"
+                         class="form-control"
+                         value="471"
+                         min="1" />
+                </div>
+                <div class="col-md-3" id="campoPaginaActual">
+                  <label class="form-label" for="paginaActual">Página actual</label>
+                  <!--
+                    Con Thymeleaf: th:field="*{paginaActual}"
+                  -->
+                  <input type="number" id="paginaActual" name="paginaActual"
+                         class="form-control"
+                         value="210"
+                         min="0"
+                         oninput="actualizarBarra()" />
+                </div>
+              </div>
+
+              <!-- Barra de progreso -->
+              <div id="barraProgreso" class="mb-3">
+                <div class="progreso-label">
+                  <span class="form-label mb-0">Progreso de lectura</span>
+                  <span class="progreso-numero" id="porcentajeTexto">0%</span>
+                </div>
+                <div class="progreso-bar-bg">
+                  <div class="progreso-bar-fill" id="barraFill" style="width: 0%;"></div>
+                </div>
+                <p class="progreso-hint">Calculado según la página actual y el total de páginas.</p>
+              </div>
+
+              <hr class="form-divider"/>
+
+              <!-- Notas privadas -->
+              <p class="divider-label">Nota privada (opcional)</p>
+
+              <div class="mb-4">
+                <label class="form-label" for="notas">Reseña o reflexión personal</label>
+                <!--
+                  Con Thymeleaf: th:field="*{notas}"
+                  Para textarea el valor va entre las etiquetas, no en value:
+                  <textarea th:field="*{notas}"></textarea>
+                -->
+                <textarea id="notas" name="notas" class="form-control">Una novela que trasciende generaciones. La narrativa de García Márquez es absolutamente hipnótica.</textarea>
+                <p class="form-hint">Máximo 1000 caracteres. Esta nota es completamente privada.</p>
+              </div>
+
+              <!-- Botones -->
+              <div class="d-flex gap-3 flex-wrap">
+                <button type="submit" class="btn-primary-lib">Guardar cambios</button>
+                <a href="mi-biblioteca.html" class="btn-secondary-lib">Cancelar</a>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+      <p class="footer-logo">Lib<span>rosa</span></p>
+      <p class="footer-text">© 2026 Librosa — IF4101 Lenguajes para Aplicaciones Comerciales · UCR Sede del Caribe</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    function toggleProgreso(estado) {
+      const campoPagina = document.getElementById('campoPaginaActual');
+      const barraDiv    = document.getElementById('barraProgreso');
+      const inputPagina = document.getElementById('paginaActual');
+
+      if (estado === 'LEYENDO') {
+        campoPagina.style.display = 'block';
+        barraDiv.style.display    = 'block';
+      } else {
+        campoPagina.style.display = 'none';
+        barraDiv.style.display    = 'none';
+        inputPagina.value         = '';
+        actualizarBarra();
+      }
+    }
+
+    function actualizarBarra() {
+      const pagActual = parseInt(document.getElementById('paginaActual').value) || 0;
+      const pagTotal  = parseInt(document.getElementById('totalPaginas').value) || 0;
+
+      let pct = 0;
+      if (pagTotal > 0 && pagActual > 0) {
+        pct = Math.min(Math.round((pagActual / pagTotal) * 100), 100);
+      }
+
+      document.getElementById('barraFill').style.width        = pct + '%';
+      document.getElementById('porcentajeTexto').textContent  = pct + '%';
+    }
+
+    document.getElementById('totalPaginas').addEventListener('input', actualizarBarra);
+
+    // Inicializar el estado de la vista según el valor ya seleccionado
+    window.addEventListener('DOMContentLoaded', () => {
+      const estadoActual = document.getElementById('estado').value;
+      toggleProgreso(estadoActual);
+      actualizarBarra();
+    });
+  </script>
+
+</body>
+</html>

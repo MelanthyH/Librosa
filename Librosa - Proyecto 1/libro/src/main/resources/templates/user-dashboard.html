@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Librosa — Mi Panel</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Lato:wght@300;400&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root {
+      --negro: #0a0a0a;
+      --negro-suave: #111111;
+      --rojo: #c0001a;
+      --rojo-hover: #e8001f;
+      --blanco: #f5f0eb;
+      --gris: #888888;
+      --borde: rgba(192, 0, 26, 0.2);
+    }
+
+    body {
+      background-color: var(--negro);
+      color: var(--blanco);
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+    }
+
+    /* ── NAVBAR ── */
+    .navbar {
+      background-color: rgba(10, 10, 10, 0.97);
+      border-bottom: 1px solid var(--borde);
+      padding: 1rem 2rem;
+    }
+
+    .navbar-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.7rem;
+      font-style: italic;
+      color: var(--blanco) !important;
+    }
+
+    .navbar-brand span { color: var(--rojo); }
+
+    .nav-link {
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gris) !important;
+      transition: color 0.3s;
+    }
+
+    .nav-link:hover { color: var(--blanco) !important; }
+
+    .navbar-toggler { border-color: var(--borde); }
+    .navbar-toggler-icon { filter: invert(1); }
+
+    .btn-nav-outline {
+      font-family: 'Cinzel', serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gris);
+      background: transparent;
+      border: 1px solid rgba(136,136,136,0.3);
+      padding: 0.45rem 1.2rem;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+
+    .btn-nav-outline:hover {
+      color: var(--blanco);
+      border-color: var(--blanco);
+    }
+
+    /* ── DASHBOARD ── */
+    .dashboard {
+      padding: 4rem 0 5rem;
+    }
+
+    .saludo-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--rojo);
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .saludo-label::before {
+      content: '';
+      width: 30px;
+      height: 1px;
+      background: var(--rojo);
+    }
+
+    .saludo-titulo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 300;
+      line-height: 1.15;
+      margin-bottom: 0.5rem;
+    }
+
+    .saludo-titulo em {
+      font-style: italic;
+      color: var(--rojo);
+    }
+
+    .saludo-sub {
+      font-size: 0.9rem;
+      color: var(--gris);
+      margin-bottom: 2.5rem;
+    }
+
+    .btn-biblioteca {
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--blanco);
+      background-color: var(--rojo);
+      border: none;
+      padding: 1rem 2.5rem;
+      text-decoration: none;
+      display: inline-block;
+      transition: background-color 0.3s;
+    }
+
+    .btn-biblioteca:hover {
+      background-color: var(--rojo-hover);
+      color: var(--blanco);
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--borde);
+      margin: 3rem 0;
+    }
+
+    /* ── ESTADÍSTICAS ── */
+    .seccion-titulo {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gris);
+      margin-bottom: 1.5rem;
+    }
+
+    .stat-card {
+      background-color: var(--negro-suave);
+      border: 1px solid rgba(255,255,255,0.05);
+      padding: 1.8rem 1.5rem;
+      text-align: center;
+      height: 100%;
+      transition: border-color 0.3s;
+    }
+
+    .stat-card:hover { border-color: var(--borde); }
+
+    .stat-numero {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.8rem;
+      font-weight: 300;
+      color: var(--rojo);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+
+    .stat-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gris);
+    }
+
+    /* ── ACCESOS RÁPIDOS ── */
+    .acceso-card {
+      background-color: var(--negro-suave);
+      border: 1px solid rgba(255,255,255,0.05);
+      padding: 1.8rem 1.5rem;
+      height: 100%;
+      text-decoration: none;
+      color: var(--blanco);
+      display: block;
+      transition: border-color 0.3s, background-color 0.3s;
+      position: relative;
+    }
+
+    .acceso-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--rojo);
+      transform: scaleX(0);
+      transition: transform 0.3s;
+    }
+
+    .acceso-card:hover::before { transform: scaleX(1); }
+
+    .acceso-card:hover {
+      background-color: rgba(192,0,26,0.05);
+      border-color: var(--borde);
+      color: var(--blanco);
+    }
+
+    .acceso-icon {
+      font-size: 1.5rem;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+
+    .acceso-nombre {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 400;
+      margin-bottom: 0.3rem;
+    }
+
+    .acceso-desc {
+      font-size: 0.82rem;
+      color: var(--gris);
+      margin: 0;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background-color: var(--negro);
+      border-top: 1px solid var(--borde);
+      padding: 1.8rem 2rem;
+    }
+
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--gris);
+      margin: 0;
+    }
+
+    .footer-logo span { color: var(--rojo); }
+
+    .footer-text {
+      font-size: 0.75rem;
+      color: rgba(136,136,136,0.5);
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg sticky-top">
+  <div class="container">
+
+    <a class="navbar-brand" href="/">
+      Lib<span>rosa</span>
+    </a>
+
+    <button class="navbar-toggler" type="button"
+            data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navMenu">
+
+      <ul class="navbar-nav ms-auto gap-3 align-items-lg-center">
+
+        <!-- 📚 BIBLIOTECA PERSONAL -->
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/mi-biblioteca}">
+            Mi Biblioteca
+          </a>
+        </li>
+
+        <!-- 🌐 BIBLIOTECA GENERAL -->
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/biblioteca-general}">
+            Biblioteca General
+          </a>
+        </li>
+
+        <!-- 👤 PERFIL -->
+        <li class="nav-item">
+          <a class="nav-link"
+             th:href="@{/usuarios/perfil}">
+            Mi Perfil
+          </a>
+        </li>
+
+        <!-- 👋 USUARIO EN SESIÓN -->
+        <li class="nav-item">
+          <span class="nav-link text-light">
+            Hola, <span th:text="${session.usuario.nombre}">Usuario</span>
+          </span>
+        </li>
+
+        <!-- 🚪 LOGOUT -->
+        <li class="nav-item">
+          <a class="btn-nav-outline" href="/usuarios/login">
+            Cerrar sesión
+          </a>
+        </li>
+
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main class="dashboard">
+
+  <div class="container">
+
+    <!-- SALUDO -->
+    <p class="saludo-label">Panel de usuario</p>
+
+    <h1 class="saludo-titulo">
+      Bienvenida,<br/>
+      <em th:text="${session.usuario.nombre}">Usuario</em>
+    </h1>
+
+    <p class="saludo-sub">
+      ¿Lista para continuar tu historia?
+    </p>
+
+    <!-- ACCESOS RÁPIDOS -->
+    <div class="row g-3 mt-4">
+
+      <div class="col-md-4">
+        <a th:href="@{/mi-biblioteca}" class="acceso-card">
+          📚
+          <p class="acceso-nombre">Mi Biblioteca</p>
+          <p class="acceso-desc">Libros guardados y progreso</p>
+        </a>
+      </div>
+
+      <div class="col-md-4">
+        <a th:href="@{/biblioteca-general}" class="acceso-card">
+          🌐
+          <p class="acceso-nombre">Biblioteca General</p>
+          <p class="acceso-desc">Explorar todos los libros</p>
+        </a>
+      </div>
+
+      <div class="col-md-4">
+        <a th:href="@{/usuarios/perfil}" class="acceso-card">
+          👤
+          <p class="acceso-nombre">Mi Perfil</p>
+          <p class="acceso-desc">Editar mis datos</p>
+        </a>
+      </div>
+
+    </div>
+
+    <hr class="divider"/>
+
+    <!-- ESTADÍSTICAS -->
+    <p class="seccion-titulo">Tu lectura de un vistazo</p>
+
+    <div class="row g-3 mb-5">
+
+      <div class="col-6 col-md-4">
+        <div class="stat-card">
+          <p class="stat-numero" th:text="${stats.leidos}">0</p>
+          <p class="stat-label">Leídos</p>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-4">
+        <div class="stat-card">
+          <p class="stat-numero" th:text="${stats.enProceso}">0</p>
+          <p class="stat-label">En proceso</p>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-4">
+        <div class="stat-card">
+          <p class="stat-numero" th:text="${stats.pendientes}">0</p>
+          <p class="stat-label">Pendientes</p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container text-center">
+    <p>Librosa © 2026</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

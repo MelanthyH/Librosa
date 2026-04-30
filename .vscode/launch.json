@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-LibroApplication<libro>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "librosa.libro.LibroApplication",
+            "projectName": "libro",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
