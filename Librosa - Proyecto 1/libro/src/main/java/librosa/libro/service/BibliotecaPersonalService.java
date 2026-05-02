@@ -23,24 +23,25 @@ public class BibliotecaPersonalService {
     // 📌 AGREGAR LIBRO
     public BibliotecaPersonal agregarLibro(int libroId, int usuarioId) {
 
-    BibliotecaPersonal bp = new BibliotecaPersonal();
+        BibliotecaPersonal bp = new BibliotecaPersonal();
 
-    Usuario usuario = usuarioRepository.findById(usuarioId)
-            .orElseThrow(() -> new RuntimeException("Usuario no existe"));
+        Usuario usuario = usuarioRepository.findById(usuarioId)
+                .orElseThrow(() -> new RuntimeException("Usuario no existe"));
 
-    Libro libro = libroRepository.findById(libroId)
-            .orElseThrow(() -> new RuntimeException("Libro no existe"));
+        Libro libro = libroRepository.findById(libroId)
+                .orElseThrow(() -> new RuntimeException("Libro no existe"));
 
-    bp.setUsuario(usuario);
-    bp.setLibro(libro);
+        bp.setUsuario(usuario);
+        bp.setLibro(libro);
 
-    bp.setEstado("PENDIENTE");
-    bp.setPaginaActual(0);
-    bp.setNotasResena("");
-    bp.setFechaActualizacion(LocalDate.now());
+        bp.setEstado("PENDIENTE");
+        bp.setPaginaActual(0);
+        bp.setNotasResena("");
+        bp.setFechaActualizacion(LocalDate.now());
 
-    return bibliotecaRepository.save(bp);
-}
+        return bibliotecaRepository.save(bp);
+    }
+
     // 📌 LISTAR LIBROS
     public List<BibliotecaPersonal> obtenerLibrosPorUsuario(int usuarioId) {
         return bibliotecaRepository.findByUsuario_Id(usuarioId);
@@ -59,9 +60,9 @@ public class BibliotecaPersonalService {
 
     // 📌 EDITAR COMPLETO (ESTO TE FALTABA)
     public BibliotecaPersonal actualizarRegistro(int id,
-                                                 String estado,
-                                                 Integer paginaActual,
-                                                 String notas) {
+            String estado,
+            Integer paginaActual,
+            String notas) {
 
         BibliotecaPersonal bp = bibliotecaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Registro no encontrado"));

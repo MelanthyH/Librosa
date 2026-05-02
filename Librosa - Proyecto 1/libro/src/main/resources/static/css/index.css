@@ -1,0 +1,293 @@
+:root {
+    --negro: #0a0a0a;
+    --negro-suave: #111111;
+    --rojo: #c0001a;
+    --rojo-hover: #e8001f;
+    --blanco: #f5f0eb;
+    --gris: #888888;
+    --borde: rgba(192, 0, 26, 0.2);
+}
+
+body {
+    background-color: var(--negro);
+    color: var(--blanco);
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+}
+
+/* ── NAVBAR ── */
+.navbar {
+    background-color: rgba(10, 10, 10, 0.97);
+    border-bottom: 1px solid var(--borde);
+    padding: 1rem 2rem;
+}
+
+.navbar-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.7rem;
+    font-style: italic;
+    color: var(--blanco) !important;
+}
+
+.navbar-brand span {
+    color: var(--rojo);
+}
+
+.navbar-brand img {
+    height: 40px;
+    margin-right: 0.5rem;
+}
+
+.nav-link {
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gris) !important;
+    transition: color 0.3s;
+}
+
+.nav-link:hover {
+    color: var(--blanco) !important;
+}
+
+.navbar-toggler {
+    border-color: var(--borde);
+}
+
+.navbar-toggler-icon {
+    filter: invert(1);
+}
+
+.btn-nav {
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--blanco);
+    background-color: var(--rojo);
+    border: none;
+    padding: 0.5rem 1.4rem;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.btn-nav:hover {
+    background-color: var(--rojo-hover);
+    color: var(--blanco);
+}
+
+/* ── HERO ── */
+.hero {
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    background: radial-gradient(ellipse 70% 70% at 60% 50%, rgba(192, 0, 26, 0.07) 0%, transparent 70%), var(--negro);
+    padding: 6rem 0 4rem;
+}
+
+.hero-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--rojo);
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+}
+
+.hero-label::before {
+    content: '';
+    width: 35px;
+    height: 1px;
+    background: var(--rojo);
+}
+
+.hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    font-weight: 300;
+    line-height: 1.08;
+    margin-bottom: 1rem;
+}
+
+.hero-title em {
+    font-style: italic;
+    color: var(--rojo);
+}
+
+.hero-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-style: italic;
+    color: var(--gris);
+    margin-bottom: 1.5rem;
+}
+
+.hero-desc {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: rgba(245, 240, 235, 0.6);
+    max-width: 500px;
+    margin-bottom: 2.5rem;
+}
+
+.btn-primary-lib {
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--blanco);
+    background-color: var(--rojo);
+    border: none;
+    padding: 0.9rem 2.2rem;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s;
+}
+
+.btn-primary-lib:hover {
+    background-color: var(--rojo-hover);
+    color: var(--blanco);
+}
+
+.btn-secondary-lib {
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gris);
+    background: transparent;
+    border: 1px solid rgba(136, 136, 136, 0.35);
+    padding: 0.9rem 2.2rem;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s;
+}
+
+.btn-secondary-lib:hover {
+    color: var(--blanco);
+    border-color: var(--blanco);
+}
+
+/* ── SECCIÓN FUNCIONES ── */
+.funciones {
+    padding: 6rem 0;
+    background-color: var(--negro);
+}
+
+.section-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--rojo);
+    display: block;
+    margin-bottom: 0.8rem;
+}
+
+.section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 300;
+    line-height: 1.2;
+    margin-bottom: 3rem;
+}
+
+.section-title em {
+    font-style: italic;
+    color: var(--rojo);
+}
+
+.feature-card {
+    background-color: var(--negro-suave);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 2.2rem 2rem;
+    height: 100%;
+    transition: border-color 0.3s, background-color 0.3s;
+    position: relative;
+}
+
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--rojo);
+    transform: scaleX(0);
+    transition: transform 0.35s;
+}
+
+.feature-card:hover::before {
+    transform: scaleX(1);
+}
+
+.feature-card:hover {
+    background-color: rgba(192, 0, 26, 0.05);
+    border-color: var(--borde);
+}
+
+.feature-icon {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.feature-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    margin-bottom: 0.7rem;
+}
+
+.feature-desc {
+    font-size: 0.88rem;
+    line-height: 1.8;
+    color: rgba(245, 240, 235, 0.55);
+    margin: 0;
+}
+
+/* ── CTA FINAL ── */
+.cta-section {
+    padding: 7rem 0;
+    background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(192, 0, 26, 0.07) 0%, transparent 70%), var(--negro-suave);
+    border-top: 1px solid var(--borde);
+    text-align: center;
+}
+
+.cta-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-style: italic;
+    color: var(--gris);
+    margin-bottom: 2.5rem;
+}
+
+/* ── FOOTER ── */
+footer {
+    background-color: var(--negro);
+    border-top: 1px solid var(--borde);
+    padding: 2rem 2rem;
+}
+
+.footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--gris);
+    margin: 0;
+}
+
+.footer-logo span {
+    color: var(--rojo);
+}
+
+.footer-text {
+    font-size: 0.75rem;
+    color: rgba(136, 136, 136, 0.5);
+    margin: 0;
+}

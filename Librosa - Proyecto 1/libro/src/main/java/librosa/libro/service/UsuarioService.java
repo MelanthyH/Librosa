@@ -11,9 +11,9 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class UsuarioService {
-    
+
     private UsuarioRepository usuarioRepository;
-    
+
     public Usuario registrar(Usuario usuario) {
         // Validar que no exista email duplicado
         if (usuarioRepository.findByCorreo(usuario.getCorreo()).isPresent()) {
@@ -22,15 +22,15 @@ public class UsuarioService {
         usuario.setTipoUsuario("usuario"); // Por defecto
         return usuarioRepository.save(usuario);
     }
-    
+
     public Optional<Usuario> buscarPorCorreo(String correo) {
         return usuarioRepository.findByCorreo(correo);
     }
-    
+
     public Optional<Usuario> obtenerPorId(int id) {
         return usuarioRepository.findById(id);
     }
-    
+
     public Usuario actualizar(int id, Usuario usuario) {
         Optional<Usuario> existente = usuarioRepository.findById(id);
         if (existente.isPresent()) {
@@ -42,11 +42,11 @@ public class UsuarioService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado");
         }
     }
-    
+
     public List<Usuario> obtenerTodos() {
         return usuarioRepository.findAll();
     }
-    
+
     public void eliminar(int id) {
         usuarioRepository.deleteById(id);
     }

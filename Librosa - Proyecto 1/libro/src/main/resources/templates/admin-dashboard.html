@@ -1,571 +1,193 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Librosa — Panel de Administración</title>
 
-  <!-- Bootstrap 5 -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Lato:wght@300;400&display=swap" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
 
-  <style>
-    :root {
-      --negro: #0a0a0a;
-      --negro-suave: #111111;
-      --rojo: #c0001a;
-      --rojo-hover: #e8001f;
-      --blanco: #f5f0eb;
-      --gris: #888888;
-      --borde: rgba(192, 0, 26, 0.2);
-    }
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Lato:wght@300;400&display=swap"
+    rel="stylesheet" />
 
-    body {
-      background-color: var(--negro);
-      color: var(--blanco);
-      font-family: 'Lato', sans-serif;
-      font-weight: 300;
-      min-height: 100vh;
-    }
+  <link rel="stylesheet" th:href="@{/css/admin-dashboard.css}">
 
-    /* ── NAVBAR ── */
-    .navbar {
-      background-color: rgba(10, 10, 10, 0.97);
-      border-bottom: 1px solid var(--borde);
-      padding: 1rem 2rem;
-    }
-
-    .navbar-brand {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.7rem;
-      font-style: italic;
-      color: var(--blanco) !important;
-    }
-
-    .navbar-brand span { color: var(--rojo); }
-
-    .nav-link {
-      font-family: 'Cinzel', serif;
-      font-size: 0.72rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--gris) !important;
-      transition: color 0.3s;
-    }
-
-    .nav-link:hover { color: var(--blanco) !important; }
-
-    .nav-link.active { color: var(--blanco) !important; }
-
-    .navbar-toggler { border-color: var(--borde); }
-    .navbar-toggler-icon { filter: invert(1); }
-
-    .nav-user {
-      font-family: 'Cinzel', serif;
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      color: var(--gris);
-    }
-
-    .nav-user span { color: var(--blanco); }
-
-    /* ── BADGE DE ROL ── */
-    .badge-admin {
-      font-family: 'Cinzel', serif;
-      font-size: 0.55rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      background-color: var(--rojo);
-      color: var(--blanco);
-      padding: 0.25rem 0.6rem;
-    }
-
-    /* ── PÁGINA ── */
-    .page-wrapper {
-      padding: 3.5rem 0 5rem;
-    }
-
-    /* breadcrumb */
-    .breadcrumb-lib {
-      font-family: 'Cinzel', serif;
-      font-size: 0.62rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gris);
-      margin-bottom: 2rem;
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-
-    .breadcrumb-lib a {
-      color: var(--gris);
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-
-    .breadcrumb-lib a:hover { color: var(--blanco); }
-    .breadcrumb-lib .sep { color: var(--rojo); }
-    .breadcrumb-lib .actual { color: var(--blanco); }
-
-    /* ── ENCABEZADO ── */
-    .page-header {
-      margin-bottom: 2.5rem;
-      padding-bottom: 1.5rem;
-      border-bottom: 1px solid var(--borde);
-    }
-
-    .page-label {
-      font-family: 'Cinzel', serif;
-      font-size: 0.65rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--rojo);
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      margin-bottom: 0.8rem;
-    }
-
-    .page-label::before {
-      content: '';
-      width: 30px;
-      height: 1px;
-      background: var(--rojo);
-    }
-
-    .page-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.8rem, 3vw, 2.5rem);
-      font-weight: 300;
-    }
-
-    .page-title em { font-style: italic; color: var(--rojo); }
-
-    /* ── TARJETAS DE ESTADÍSTICA ── */
-    .stat-card {
-      background-color: var(--negro-suave);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      padding: 1.5rem;
-      height: 100%;
-    }
-
-    .stat-label {
-      font-family: 'Cinzel', serif;
-      font-size: 0.6rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--gris);
-      margin-bottom: 0.5rem;
-    }
-
-    .stat-number {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.8rem;
-      font-weight: 300;
-      color: var(--blanco);
-      line-height: 1;
-    }
-
-    .stat-number.accent { color: var(--rojo); }
-
-    .stat-sub {
-      font-size: 0.75rem;
-      color: var(--gris);
-      margin-top: 0.4rem;
-    }
-
-    /* ── SECCIÓN DE TABLA ── */
-    .section-label {
-      font-family: 'Cinzel', serif;
-      font-size: 0.6rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--gris);
-      margin-bottom: 1.2rem;
-    }
-
-    .admin-table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    .admin-table thead tr {
-      border-bottom: 1px solid var(--borde);
-    }
-
-    .admin-table th {
-      font-family: 'Cinzel', serif;
-      font-size: 0.6rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gris);
-      padding: 0 0 0.8rem 0;
-      font-weight: 400;
-      text-align: left;
-    }
-
-    .admin-table td {
-      font-family: 'Lato', sans-serif;
-      font-weight: 300;
-      font-size: 0.88rem;
-      color: var(--blanco);
-      padding: 0.9rem 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-      vertical-align: middle;
-    }
-
-    .admin-table tr:last-child td { border-bottom: none; }
-
-    .admin-table tbody tr:hover td {
-      background-color: rgba(255, 255, 255, 0.02);
-    }
-
-    /* ── ESTADO BADGE ── */
-    .estado-badge {
-      font-family: 'Cinzel', serif;
-      font-size: 0.55rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      padding: 0.25rem 0.6rem;
-      display: inline-block;
-    }
-
-    .estado-activo   { background: rgba(192, 0, 26, 0.15); color: var(--rojo); border: 1px solid rgba(192,0,26,0.3); }
-    .estado-inactivo { background: rgba(136, 136, 136, 0.1); color: var(--gris); border: 1px solid rgba(136,136,136,0.2); }
-
-    /* ── BOTONES ── */
-    .btn-primary-lib {
-      font-family: 'Cinzel', serif;
-      font-size: 0.72rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--blanco);
-      background-color: var(--rojo);
-      border: none;
-      padding: 0.65rem 1.5rem;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
-      transition: background-color 0.3s;
-    }
-
-    .btn-primary-lib:hover { background-color: var(--rojo-hover); color: var(--blanco); }
-
-    .btn-ghost-lib {
-      font-family: 'Cinzel', serif;
-      font-size: 0.65rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--gris);
-      background: transparent;
-      border: 1px solid rgba(255,255,255,0.1);
-      padding: 0.4rem 0.9rem;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
-      transition: border-color 0.3s, color 0.3s;
-    }
-
-    .btn-ghost-lib:hover { border-color: var(--rojo); color: var(--blanco); }
-
-    .btn-danger-lib {
-      font-family: 'Cinzel', serif;
-      font-size: 0.65rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--rojo);
-      background: transparent;
-      border: 1px solid rgba(192,0,26,0.3);
-      padding: 0.4rem 0.9rem;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
-      transition: background-color 0.3s, color 0.3s;
-    }
-
-    .btn-danger-lib:hover { background-color: var(--rojo); color: var(--blanco); }
-
-    /* ── CARD CONTENEDOR ── */
-    .admin-card {
-      background-color: var(--negro-suave);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      padding: 2rem;
-      margin-bottom: 2rem;
-    }
-
-    .admin-card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1.5rem;
-      padding-bottom: 1rem;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-    }
-
-    /* ── DIVISOR ── */
-    .section-divider {
-      border: none;
-      border-top: 1px solid var(--borde);
-      margin: 2.5rem 0;
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-      padding: 1.5rem 0;
-    }
-
-    .footer-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.1rem;
-      font-style: italic;
-      color: var(--gris);
-      margin: 0;
-    }
-
-    .footer-logo span { color: var(--rojo); }
-
-    .footer-text {
-      font-size: 0.75rem;
-      color: rgba(136, 136, 136, 0.5);
-      margin: 0;
-    }
-  </style>
 </head>
+
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg sticky-top">
-  <div class="container">
-    <a class="navbar-brand" href="/">Lib<span>rosa</span></a>
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="/">Lib<span>rosa</span></a>
 
-    <button class="navbar-toggler" type="button"
-            data-bs-toggle="collapse" data-bs-target="#navMenu">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-    <div class="collapse navbar-collapse" id="navMenu">
-      <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-lg-3 align-items-lg-center">
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-lg-3 align-items-lg-center">
 
-        <li class="nav-item">
-          <a class="nav-link active" th:href="@{/admin/dashboard}">
-            Panel Admin
+          <li class="nav-item">
+            <a class="nav-link active" th:href="@{/admin/dashboard}">
+              Panel Admin
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <span class="nav-user">
+              <span class="badge-admin">Admin</span>&nbsp;
+              Hola, <span th:text="${session.usuario.nombre}">Admin</span>
+            </span>
+          </li>
+
+          <li class="nav-item ms-lg-2">
+            <a th:href="@{/usuarios/logout}" class="nav-link" style="color: var(--rojo) !important;">
+              Cerrar sesión
+            </a>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="page-wrapper">
+    <div class="container">
+
+      <div class="breadcrumb-lib">
+        <span class="actual">Panel de Administración</span>
+      </div>
+
+      <div class="page-header d-flex flex-wrap justify-content-between align-items-end gap-3">
+        <div>
+          <p class="page-label">Vista restringida</p>
+          <h1 class="page-title">Panel de <em>Administración</em></h1>
+        </div>
+      </div>
+
+      <div class="row g-3 mb-4">
+
+        <div class="col-6 col-md-3">
+          <div class="stat-card">
+            <p class="stat-label">Usuarios</p>
+            <p class="stat-number" th:text="${stats.totalUsuarios}">0</p>
+            <p class="stat-sub">registrados</p>
+          </div>
+        </div>
+
+        <div class="col-6 col-md-3">
+          <div class="stat-card">
+            <p class="stat-label">Libros</p>
+            <p class="stat-number accent" th:text="${stats.totalLibros}">0</p>
+            <p class="stat-sub">en el sistema</p>
+          </div>
+        </div>
+
+        <div class="col-6 col-md-3">
+          <div class="stat-card">
+            <p class="stat-label">Géneros</p>
+            <p class="stat-number" th:text="${stats.totalGeneros}">0</p>
+            <p class="stat-sub">disponibles</p>
+          </div>
+        </div>
+
+      </div>
+
+      <hr class="section-divider" />
+
+      <div class="admin-card">
+
+        <div class="admin-card-header">
+          <p class="section-label mb-0">Gestión de usuarios</p>
+          <a href="/usuarios/registro" class="btn-primary-lib">+ Nuevo usuario</a>
+        </div>
+
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Correo</th>
+                <th>Rol</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr th:each="u : ${usuarios}">
+                <td th:text="${u.nombre}"></td>
+                <td th:text="${u.correo}"></td>
+                <td th:text="${u.tipoUsuario}"></td>
+
+                <td class="d-flex gap-2">
+                  <a th:href="@{/usuarios/{id}/editar(id=${u.id})}" class="btn-ghost-lib">
+                    Editar
+                  </a>
+
+                  <a th:href="@{/usuarios/{id}/eliminar(id=${u.id})}" class="btn-danger-lib"
+                    onclick="return confirm('¿Eliminar este usuario?')">
+                    Eliminar
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+
+          </table>
+        </div>
+      </div>
+
+      <div class="admin-card">
+
+        <div class="admin-card-header">
+          <p class="section-label mb-0">Gestión de géneros</p>
+          <a th:href="@{/generos/nuevo}" class="btn-primary-lib">
+            + Nuevo género
           </a>
-        </li>
+        </div>
 
-        <li class="nav-item">
-          <span class="nav-user">
-            <span class="badge-admin">Admin</span>&nbsp;
-            Hola, <span th:text="${session.usuario.nombre}">Admin</span>
-          </span>
-        </li>
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Libros asociados</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
 
-        <li class="nav-item ms-lg-2">
-          <a th:href="@{/usuarios/logout}"
-             class="nav-link"
-             style="color: var(--rojo) !important;">
-             Cerrar sesión
-          </a>
-        </li>
+            <tbody>
+              <tr th:each="g : ${generos}" th:if="${g != null}">
+                <td th:text="${g.id}"></td>
+                <td th:text="${g.nombreCategoria}"></td>
+                <td>0</td>
 
-      </ul>
-    </div>
-  </div>
-</nav>
+                <td class="d-flex gap-2">
+                  <a th:href="@{/generos/{id}/editar(id=${g.id})}" class="btn-ghost-lib">
+                    Editar
+                  </a>
 
-<!-- CONTENIDO -->
-<div class="page-wrapper">
-  <div class="container">
+                  <a th:href="@{/generos/{id}/eliminar(id=${g.id})}" class="btn-danger-lib"
+                    onclick="return confirm('¿Eliminar este género?')">
+                    Eliminar
+                  </a>
+                </td>
+              </tr>
+            </tbody>
 
-    <!-- Breadcrumb -->
-    <div class="breadcrumb-lib">
-      <span class="actual">Panel de Administración</span>
-    </div>
-
-    <!-- HEADER -->
-    <div class="page-header d-flex flex-wrap justify-content-between align-items-end gap-3">
-      <div>
-        <p class="page-label">Vista restringida</p>
-        <h1 class="page-title">Panel de <em>Administración</em></h1>
-      </div>
-    </div>
-
-    <!-- ESTADÍSTICAS -->
-    <div class="row g-3 mb-4">
-
-      <div class="col-6 col-md-3">
-        <div class="stat-card">
-          <p class="stat-label">Usuarios</p>
-          <p class="stat-number" th:text="${stats.totalUsuarios}">0</p>
-          <p class="stat-sub">registrados</p>
+          </table>
         </div>
       </div>
-
-      <div class="col-6 col-md-3">
-        <div class="stat-card">
-          <p class="stat-label">Libros</p>
-          <p class="stat-number accent" th:text="${stats.totalLibros}">0</p>
-          <p class="stat-sub">en el sistema</p>
-        </div>
-      </div>
-
-      <div class="col-6 col-md-3">
-        <div class="stat-card">
-          <p class="stat-label">Géneros</p>
-          <p class="stat-number" th:text="${stats.totalGeneros}">0</p>
-          <p class="stat-sub">disponibles</p>
-        </div>
-      </div>
-
     </div>
-
-    <hr class="section-divider"/>
-
-    <!-- USUARIOS -->
-    <div class="admin-card">
-
-      <div class="admin-card-header">
-        <p class="section-label mb-0">Gestión de usuarios</p>
-        <a href="/usuarios/registro" class="btn-primary-lib">+ Nuevo usuario</a>
-      </div>
-
-      <div class="table-responsive">
-        <table class="admin-table">
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Correo</th>
-              <th>Rol</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr th:each="u : ${usuarios}">
-              <td th:text="${u.nombre}"></td>
-              <td th:text="${u.correo}"></td>
-              <td th:text="${u.tipoUsuario}"></td>
-
-              <td class="d-flex gap-2">
-                <a th:href="@{/usuarios/{id}/editar(id=${u.id})}"
-                   class="btn-ghost-lib">
-                   Editar
-                </a>
-
-                <a th:href="@{/usuarios/{id}/eliminar(id=${u.id})}"
-                   class="btn-danger-lib"
-                   onclick="return confirm('¿Eliminar este usuario?')">
-                   Eliminar
-                </a>
-              </td>
-            </tr>
-          </tbody>
-
-        </table>
-      </div>
-    </div>
-
-    <!-- GÉNEROS -->
-    <div class="admin-card">
-
-      <div class="admin-card-header">
-        <p class="section-label mb-0">Gestión de géneros</p>
-        <a th:href="@{/generos/nuevo}" class="btn-primary-lib">
-          + Nuevo género
-        </a>
-      </div>
-
-      <div class="table-responsive">
-        <table class="admin-table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Nombre</th>
-              <th>Libros asociados</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr th:each="g : ${generos}" th:if="${g != null}">
-              <td th:text="${g.id}"></td>
-              <td th:text="${g.nombreCategoria}"></td>
-              <td>0</td>
-
-              <td class="d-flex gap-2">
-                <a th:href="@{/generos/{id}/editar(id=${g.id})}"
-                   class="btn-ghost-lib">
-                   Editar
-                </a>
-
-                <a th:href="@{/generos/{id}/eliminar(id=${g.id})}"
-                   class="btn-danger-lib"
-                   onclick="return confirm('¿Eliminar este género?')">
-                   Eliminar
-                </a>
-              </td>
-            </tr>
-          </tbody>
-
-        </table>
-      </div>
-    </div>
-
-    <!-- LIBROS -->
-    <div class="admin-card">
-
-      <div class="admin-card-header">
-        <p class="section-label mb-0">Gestión de libros</p>
-        <a th:href="@{/libros/nuevo}" class="btn-primary-lib">
-          + Nuevo libro
-        </a>
-      </div>
-
-      <table class="admin-table">
-        <thead>
-          <tr>
-            <th>Título</th>
-            <th>Autor</th>
-            <th>Descripción</th>
-            <th>Categoría</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr th:each="l : ${libros}">
-            <td th:text="${l.titulo}"></td>
-            <td th:text="${l.autor}"></td>
-            <td th:text="${#strings.abbreviate(l.descripcion, 40)}"></td>
-            <td th:text="${l.categoria.nombreCategoria}"></td>
-
-            <td class="d-flex gap-2">
-              <a th:href="@{/libros/{id}/editar(id=${l.id})}"
-                 class="btn-ghost-lib">Editar</a>
-
-              <a th:href="@{/libros/{id}/eliminar(id=${l.id})}"
-                 class="btn-danger-lib"
-                 onclick="return confirm('¿Eliminar este libro?')">
-                 Eliminar
-              </a>
-            </td>
-          </tr>
-        </tbody>
-
-      </table>
-    </div>
-
   </div>
-</div>
 
-<!-- FOOTER -->
-<footer>
-  <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
-    <p class="footer-logo">Lib<span>rosa</span></p>
-    <p class="footer-text">© 2026 Librosa — IF4101 Lenguajes para Aplicaciones Comerciales · UCR Sede del Caribe</p>
-  </div>
-</footer>
+  <footer>
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+      <p class="footer-logo">Lib<span>rosa</span></p>
+      <p class="footer-text">© 2026 Librosa — IF4101 Lenguajes para Aplicaciones Comerciales · UCR Sede del Caribe</p>
+    </div>
+  </footer>
 
 </body>

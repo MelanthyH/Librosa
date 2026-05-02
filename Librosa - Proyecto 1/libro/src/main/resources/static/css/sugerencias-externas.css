@@ -1,0 +1,54 @@
+:root {
+    --negro: #0a0a0a;
+    --negro-suave: #111;
+    --rojo: #c0001a;
+    --blanco: #f5f0eb;
+    --gris: #888;
+    --borde: rgba(192, 0, 26, 0.2);
+}
+
+body {
+    background: var(--negro);
+    color: var(--blanco);
+    font-family: 'Lato', sans-serif;
+}
+
+.navbar {
+    background-color: rgba(10, 10, 10, 0.97);
+    border-bottom: 1px solid var(--borde);
+    padding: 1rem 2rem;
+}
+
+.navbar-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.7rem;
+    font-style: italic;
+    color: var(--blanco) !important;
+}
+
+.navbar-brand span {
+    color: var(--rojo);
+}
+
+.nav-link {
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    color: var(--gris) !important;
+}
+
+.book-card {
+    background: var(--negro-suave);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    height: 100%;
+    padding: 1rem;
+}
+
+.book-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+}
+
+.book-author {
+    color: var(--gris);
+    font-size: 0.8rem;
+}

@@ -11,24 +11,24 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class CategoriaService {
-    
+
     private CategoriaRepository categoriaRepository;
-    
+
     public Categoria add(Categoria categoria) {
         return categoriaRepository.save(categoria);
     }
-    
+
     public List<Categoria> obtenerTodas() {
-    return categoriaRepository.findAll()
-            .stream()
-            .filter(Objects::nonNull)
-            .toList();
-}
-    
+        return categoriaRepository.findAll()
+                .stream()
+                .filter(Objects::nonNull)
+                .toList();
+    }
+
     public Optional<Categoria> obtenerPorId(int id) {
         return categoriaRepository.findById(id);
     }
-    
+
     public Categoria actualizar(int id, Categoria categoria) {
         Optional<Categoria> existente = categoriaRepository.findById(id);
         if (existente.isPresent()) {
@@ -39,7 +39,7 @@ public class CategoriaService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Categoría no encontrada");
         }
     }
-    
+
     public void eliminar(int id) {
         categoriaRepository.deleteById(id);
     }

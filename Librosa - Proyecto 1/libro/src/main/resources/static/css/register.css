@@ -1,0 +1,198 @@
+:root {
+    --negro: #0a0a0a;
+    --negro-suave: #111111;
+    --rojo: #c0001a;
+    --rojo-hover: #e8001f;
+    --blanco: #f5f0eb;
+    --gris: #888888;
+    --borde: rgba(192, 0, 26, 0.2);
+}
+
+body {
+    background-color: var(--negro);
+    color: var(--blanco);
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar {
+    background-color: rgba(10, 10, 10, 0.97);
+    border-bottom: 1px solid var(--borde);
+    padding: 1rem 2rem;
+}
+
+.navbar-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.7rem;
+    font-style: italic;
+    color: var(--blanco) !important;
+}
+
+.navbar-brand span {
+    color: var(--rojo);
+}
+
+.navbar-brand img {
+    height: 40px;
+    margin-right: 0.5rem;
+}
+
+.page-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 1rem;
+    background: radial-gradient(ellipse 60% 60% at 50% 40%, rgba(192, 0, 26, 0.06) 0%, transparent 70%), var(--negro);
+}
+
+.register-card {
+    background-color: var(--negro-suave);
+    border: 1px solid var(--borde);
+    padding: 3rem 2.5rem;
+    width: 100%;
+    max-width: 460px;
+}
+
+.card-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--rojo);
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 0.8rem;
+}
+
+.card-label::before {
+    content: '';
+    width: 30px;
+    height: 1px;
+    background: var(--rojo);
+}
+
+.card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    font-weight: 300;
+    margin-bottom: 0.3rem;
+}
+
+.card-title em {
+    font-style: italic;
+    color: var(--rojo);
+}
+
+.card-subtitle {
+    font-size: 0.88rem;
+    color: var(--gris);
+    margin-bottom: 2rem;
+}
+
+.form-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gris);
+    margin-bottom: 0.4rem;
+}
+
+.form-control {
+    background-color: var(--negro);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--blanco);
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    font-size: 0.95rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0;
+    transition: border-color 0.3s;
+}
+
+.form-control:focus {
+    background-color: var(--negro);
+    border-color: var(--rojo);
+    color: var(--blanco);
+    box-shadow: none;
+    outline: none;
+}
+
+.form-control::placeholder {
+    color: rgba(136, 136, 136, 0.4);
+}
+
+.btn-submit {
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--blanco);
+    background-color: var(--rojo);
+    border: none;
+    padding: 0.9rem;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 0;
+}
+
+.btn-submit:hover {
+    background-color: var(--rojo-hover);
+}
+
+.login-link {
+    font-size: 0.85rem;
+    color: var(--gris);
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+.login-link a {
+    color: var(--rojo);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.login-link a:hover {
+    color: var(--rojo-hover);
+}
+
+.form-divider {
+    border-color: rgba(255, 255, 255, 0.07);
+    margin: 1.5rem 0;
+}
+
+footer {
+    background-color: var(--negro);
+    border-top: 1px solid var(--borde);
+    padding: 1.5rem 2rem;
+}
+
+.footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--gris);
+    margin: 0;
+}
+
+.footer-logo span {
+    color: var(--rojo);
+}
+
+.footer-text {
+    font-size: 0.75rem;
+    color: rgba(136, 136, 136, 0.5);
+    margin: 0;
+}
+
+.invalid-feedback {
+    font-size: 0.78rem;
+    color: var(--rojo);
+}

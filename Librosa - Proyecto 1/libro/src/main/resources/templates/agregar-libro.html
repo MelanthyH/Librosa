@@ -1,323 +1,25 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Librosa — Agregar libro</title>
 
-  <!-- Bootstrap 5 -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Lato:wght@300;400&display=swap" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Lato:wght@300;400&display=swap"
+    rel="stylesheet" />
 
-  <style>
-    :root {
-      --negro: #0a0a0a;
-      --negro-suave: #111111;
-      --rojo: #c0001a;
-      --rojo-hover: #e8001f;
-      --blanco: #f5f0eb;
-      --gris: #888888;
-      --borde: rgba(192, 0, 26, 0.2);
-    }
-
-    body {
-      background-color: var(--negro);
-      color: var(--blanco);
-      font-family: 'Lato', sans-serif;
-      font-weight: 300;
-      min-height: 100vh;
-    }
-
-    /* ── NAVBAR ── */
-    .navbar {
-      background-color: rgba(10, 10, 10, 0.97);
-      border-bottom: 1px solid var(--borde);
-      padding: 1rem 2rem;
-    }
-
-    .navbar-brand {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.7rem;
-      font-style: italic;
-      color: var(--blanco) !important;
-    }
-
-    .navbar-brand span { color: var(--rojo); }
-
-    .nav-link {
-      font-family: 'Cinzel', serif;
-      font-size: 0.72rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--gris) !important;
-      transition: color 0.3s;
-    }
-
-    .nav-link:hover { color: var(--blanco) !important; }
-
-    .navbar-toggler { border-color: var(--borde); }
-    .navbar-toggler-icon { filter: invert(1); }
-
-    .nav-user {
-      font-family: 'Cinzel', serif;
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      color: var(--gris);
-    }
-
-    .nav-user span { color: var(--blanco); }
-
-    /* ── PÁGINA ── */
-    .page-wrapper {
-      padding: 3.5rem 0 5rem;
-    }
-
-    /* breadcrumb sencillo */
-    .breadcrumb-lib {
-      font-family: 'Cinzel', serif;
-      font-size: 0.62rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gris);
-      margin-bottom: 2rem;
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-
-    .breadcrumb-lib a {
-      color: var(--gris);
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-
-    .breadcrumb-lib a:hover { color: var(--blanco); }
-
-    .breadcrumb-lib .sep { color: var(--rojo); }
-
-    .breadcrumb-lib .actual { color: var(--blanco); }
-
-    /* ── ENCABEZADO DE PÁGINA ── */
-    .page-header {
-      margin-bottom: 2.5rem;
-      padding-bottom: 1.5rem;
-      border-bottom: 1px solid var(--borde);
-    }
-
-    .page-label {
-      font-family: 'Cinzel', serif;
-      font-size: 0.65rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--rojo);
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      margin-bottom: 0.8rem;
-    }
-
-    .page-label::before {
-      content: '';
-      width: 30px;
-      height: 1px;
-      background: var(--rojo);
-    }
-
-    .page-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.8rem, 3vw, 2.5rem);
-      font-weight: 300;
-    }
-
-    .page-title em { font-style: italic; color: var(--rojo); }
-
-    /* ── CARD DEL FORMULARIO ── */
-    .form-card {
-      background-color: var(--negro-suave);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      padding: 2.5rem;
-    }
-
-    /* ── CAMPOS ── */
-    .form-label {
-      font-family: 'Cinzel', serif;
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gris);
-      margin-bottom: 0.5rem;
-    }
-
-    .form-control,
-    .form-select {
-      background-color: var(--negro);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      color: var(--blanco);
-      border-radius: 0;
-      font-family: 'Lato', sans-serif;
-      font-weight: 300;
-      font-size: 0.9rem;
-      padding: 0.7rem 1rem;
-      transition: border-color 0.3s;
-    }
-
-    .form-control:focus,
-    .form-select:focus {
-      background-color: var(--negro);
-      border-color: var(--rojo);
-      color: var(--blanco);
-      box-shadow: none;
-      outline: none;
-    }
-
-    .form-control::placeholder {
-      color: rgba(136, 136, 136, 0.5);
-    }
-
-    /* select: opciones */
-    .form-select option {
-      background-color: #1a1a1a;
-      color: var(--blanco);
-    }
-
-    /* textarea */
-    textarea.form-control { resize: vertical; min-height: 110px; }
-
-    /* ── BARRA DE PROGRESO DE PÁGINA ── */
-    .progreso-label {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.4rem;
-    }
-
-    .progreso-numero {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.1rem;
-      color: var(--rojo);
-    }
-
-    .progreso-bar-bg {
-      height: 3px;
-      background: rgba(255, 255, 255, 0.07);
-      width: 100%;
-    }
-
-    .progreso-bar-fill {
-      height: 3px;
-      background: var(--rojo);
-      width: 0%;
-      transition: width 0.3s;
-    }
-
-    .progreso-hint {
-      font-size: 0.75rem;
-      color: var(--gris);
-      margin-top: 0.4rem;
-    }
-
-    /* campo numérico con estilo */
-    input[type="number"]::-webkit-inner-spin-button { opacity: 0.4; }
-
-    /* ── NOTA DE CAMPO OBLIGATORIO ── */
-    .required-mark { color: var(--rojo); margin-left: 2px; }
-
-    .form-hint {
-      font-size: 0.75rem;
-      color: var(--gris);
-      margin-top: 0.35rem;
-    }
-
-    /* ── DIVISOR ── */
-    .form-divider {
-      border: none;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-      margin: 2rem 0;
-    }
-
-    .divider-label {
-      font-family: 'Cinzel', serif;
-      font-size: 0.6rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--gris);
-      margin-bottom: 1.2rem;
-    }
-
-    /* ── BOTONES ── */
-    .btn-primary-lib {
-      font-family: 'Cinzel', serif;
-      font-size: 0.72rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--blanco);
-      background-color: var(--rojo);
-      border: none;
-      padding: 0.85rem 2.2rem;
-      text-decoration: none;
-      display: inline-block;
-      transition: background-color 0.3s;
-      cursor: pointer;
-    }
-
-    .btn-primary-lib:hover {
-      background-color: var(--rojo-hover);
-      color: var(--blanco);
-    }
-
-    .btn-secondary-lib {
-      font-family: 'Cinzel', serif;
-      font-size: 0.72rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--gris);
-      background: transparent;
-      border: 1px solid rgba(136, 136, 136, 0.35);
-      padding: 0.85rem 2.2rem;
-      text-decoration: none;
-      display: inline-block;
-      transition: all 0.3s;
-      cursor: pointer;
-    }
-
-    .btn-secondary-lib:hover {
-      color: var(--blanco);
-      border-color: var(--blanco);
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      background-color: var(--negro);
-      border-top: 1px solid var(--borde);
-      padding: 2rem;
-    }
-
-    .footer-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.1rem;
-      font-style: italic;
-      color: var(--gris);
-      margin: 0;
-    }
-
-    .footer-logo span { color: var(--rojo); }
-
-    .footer-text {
-      font-size: 0.75rem;
-      color: rgba(136, 136, 136, 0.5);
-      margin: 0;
-    }
-  </style>
+  <link rel="stylesheet" th:href="@{/css/agregar-libro.css}" />
 </head>
+
 <body>
 
-  <!-- NAVBAR -->
   <nav class="navbar navbar-expand-lg sticky-top">
     <div class="container">
       <a class="navbar-brand" href="index.html">Lib<span>rosa</span></a>
-      <button class="navbar-toggler" type="button"
-              data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navMenu">
@@ -335,34 +37,25 @@
     </div>
   </nav>
 
-  <!-- CONTENIDO -->
   <div class="page-wrapper">
     <div class="container">
 
-      <!-- Breadcrumb -->
       <div class="breadcrumb-lib">
         <a href="mi-biblioteca.html">Mi Biblioteca</a>
         <span class="sep">›</span>
         <span class="actual">Agregar libro</span>
       </div>
 
-      <!-- Encabezado -->
       <div class="page-header">
         <p class="page-label">Nueva entrada</p>
         <h1 class="page-title">Agregar un <em>libro</em></h1>
       </div>
 
-      <!-- Formulario -->
-      <!--
-        Con Thymeleaf esto sería:
-        <form th:action="@{/biblioteca/agregar}" th:object="${libroForm}" method="post">
-      -->
       <div class="row justify-content-center">
         <div class="col-lg-8">
           <div class="form-card">
             <form action="#" method="post">
 
-              <!-- Información básica -->
               <p class="divider-label">Información del libro</p>
 
               <div class="row g-3 mb-3">
@@ -370,22 +63,16 @@
                   <label class="form-label" for="titulo">
                     Título <span class="required-mark">*</span>
                   </label>
-                  <!--
-                    Con Thymeleaf: th:field="*{titulo}"
-                  -->
-                  <input type="text" id="titulo" name="titulo"
-                         class="form-control"
-                         placeholder="Ej: Cien años de soledad"
-                         required />
+
+                  <input type="text" id="titulo" name="titulo" class="form-control"
+                    placeholder="Ej: Cien años de soledad" required />
                 </div>
                 <div class="col-md-4">
                   <label class="form-label" for="anio">
                     Año de publicación
                   </label>
-                  <input type="number" id="anio" name="anioPublicacion"
-                         class="form-control"
-                         placeholder="Ej: 1967"
-                         min="1000" max="2099" />
+                  <input type="number" id="anio" name="anioPublicacion" class="form-control" placeholder="Ej: 1967"
+                    min="1000" max="2099" />
                 </div>
               </div>
 
@@ -394,21 +81,14 @@
                   <label class="form-label" for="autor">
                     Autor <span class="required-mark">*</span>
                   </label>
-                  <input type="text" id="autor" name="autor"
-                         class="form-control"
-                         placeholder="Ej: Gabriel García Márquez"
-                         required />
+                  <input type="text" id="autor" name="autor" class="form-control"
+                    placeholder="Ej: Gabriel García Márquez" required />
                 </div>
                 <div class="col-md-6">
                   <label class="form-label" for="genero">
                     Género <span class="required-mark">*</span>
                   </label>
-                  <!--
-                    Con Thymeleaf esto sería un select dinámico:
-                    <select th:field="*{generoId}" th:each="g : ${generos}">
-                      <option th:value="${g.id}" th:text="${g.nombre}"></option>
-                    </select>
-                  -->
+
                   <select id="genero" name="generoId" class="form-select" required>
                     <option value="" disabled selected>Seleccionar género</option>
                     <option value="1">Fantasía</option>
@@ -422,9 +102,8 @@
                 </div>
               </div>
 
-              <hr class="form-divider"/>
+              <hr class="form-divider" />
 
-              <!-- Estado y progreso -->
               <p class="divider-label">Estado de lectura</p>
 
               <div class="row g-3 mb-3">
@@ -432,8 +111,7 @@
                   <label class="form-label" for="estado">
                     Estado <span class="required-mark">*</span>
                   </label>
-                  <select id="estado" name="estado" class="form-select"
-                          required onchange="toggleProgreso(this.value)">
+                  <select id="estado" name="estado" class="form-select" required onchange="toggleProgreso(this.value)">
                     <option value="" disabled selected>Seleccionar estado</option>
                     <option value="PENDIENTE">📋 Pendiente</option>
                     <option value="LEYENDO">📖 En proceso</option>
@@ -442,22 +120,16 @@
                 </div>
                 <div class="col-md-3" id="campoTotalPaginas">
                   <label class="form-label" for="totalPaginas">Total de páginas</label>
-                  <input type="number" id="totalPaginas" name="totalPaginas"
-                         class="form-control"
-                         placeholder="Ej: 320"
-                         min="1" />
+                  <input type="number" id="totalPaginas" name="totalPaginas" class="form-control" placeholder="Ej: 320"
+                    min="1" />
                 </div>
                 <div class="col-md-3" id="campoPaginaActual" style="display:none;">
                   <label class="form-label" for="paginaActual">Página actual</label>
-                  <input type="number" id="paginaActual" name="paginaActual"
-                         class="form-control"
-                         placeholder="Ej: 142"
-                         min="0"
-                         oninput="actualizarBarra()" />
+                  <input type="number" id="paginaActual" name="paginaActual" class="form-control" placeholder="Ej: 142"
+                    min="0" oninput="actualizarBarra()" />
                 </div>
               </div>
 
-              <!-- Barra de progreso (solo visible si estado = LEYENDO) -->
               <div id="barraProgreso" style="display:none;" class="mb-3">
                 <div class="progreso-label">
                   <span class="form-label mb-0">Progreso de lectura</span>
@@ -469,19 +141,17 @@
                 <p class="progreso-hint">Calculado según la página actual y el total de páginas.</p>
               </div>
 
-              <hr class="form-divider"/>
+              <hr class="form-divider" />
 
-              <!-- Notas privadas -->
               <p class="divider-label">Nota privada (opcional)</p>
 
               <div class="mb-4">
                 <label class="form-label" for="notas">Reseña o reflexión personal</label>
                 <textarea id="notas" name="notas" class="form-control"
-                          placeholder="Solo tú podrás ver esto. Escribe lo que quieras..."></textarea>
+                  placeholder="Solo tú podrás ver esto. Escribe lo que quieras..."></textarea>
                 <p class="form-hint">Máximo 1000 caracteres. Esta nota es completamente privada.</p>
               </div>
 
-              <!-- Botones -->
               <div class="d-flex gap-3 flex-wrap">
                 <button type="submit" class="btn-primary-lib">Guardar libro</button>
                 <a href="mi-biblioteca.html" class="btn-secondary-lib">Cancelar</a>
@@ -495,7 +165,6 @@
     </div>
   </div>
 
-  <!-- FOOTER -->
   <footer>
     <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
       <p class="footer-logo">Lib<span>rosa</span></p>
@@ -503,44 +172,40 @@
     </div>
   </footer>
 
-  <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
-    // Muestra u oculta el campo "página actual" y la barra según el estado elegido
     function toggleProgreso(estado) {
-      const campoPagina  = document.getElementById('campoPaginaActual');
-      const barraDiv     = document.getElementById('barraProgreso');
-      const inputPagina  = document.getElementById('paginaActual');
+      const campoPagina = document.getElementById('campoPaginaActual');
+      const barraDiv = document.getElementById('barraProgreso');
+      const inputPagina = document.getElementById('paginaActual');
 
       if (estado === 'LEYENDO') {
         campoPagina.style.display = 'block';
-        barraDiv.style.display    = 'block';
+        barraDiv.style.display = 'block';
       } else {
         campoPagina.style.display = 'none';
-        barraDiv.style.display    = 'none';
-        inputPagina.value         = '';
+        barraDiv.style.display = 'none';
+        inputPagina.value = '';
         actualizarBarra();
       }
     }
 
-    // Actualiza la barra de progreso visualmente
     function actualizarBarra() {
-      const pagActual = parseInt(document.getElementById('paginaActual').value)  || 0;
-      const pagTotal  = parseInt(document.getElementById('totalPaginas').value)  || 0;
+      const pagActual = parseInt(document.getElementById('paginaActual').value) || 0;
+      const pagTotal = parseInt(document.getElementById('totalPaginas').value) || 0;
 
       let pct = 0;
       if (pagTotal > 0 && pagActual > 0) {
         pct = Math.min(Math.round((pagActual / pagTotal) * 100), 100);
       }
 
-      document.getElementById('barraFill').style.width   = pct + '%';
+      document.getElementById('barraFill').style.width = pct + '%';
       document.getElementById('porcentajeTexto').textContent = pct + '%';
     }
-
-    // También actualiza al cambiar el total de páginas
     document.getElementById('totalPaginas').addEventListener('input', actualizarBarra);
   </script>
 
 </body>
+
 </html>

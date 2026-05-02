@@ -1,0 +1,170 @@
+:root {
+    --negro: #0a0a0a;
+    --negro-suave: #111111;
+    --rojo: #c0001a;
+    --rojo-hover: #e8001f;
+    --blanco: #f5f0eb;
+    --gris: #888888;
+    --borde: rgba(192, 0, 26, 0.2);
+}
+
+body {
+    background-color: var(--negro);
+    color: var(--blanco);
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+}
+
+.navbar {
+    background-color: rgba(10, 10, 10, 0.97);
+    border-bottom: 1px solid var(--borde);
+    padding: 1rem 2rem;
+}
+
+.navbar-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.7rem;
+    font-style: italic;
+    color: var(--blanco) !important;
+}
+
+.navbar-brand span {
+    color: var(--rojo);
+}
+
+.nav-link {
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gris) !important;
+}
+
+.btn-nav-outline {
+    font-family: 'Cinzel', serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gris);
+    background: transparent;
+    border: 1px solid rgba(136, 136, 136, 0.3);
+    padding: 0.45rem 1.2rem;
+    text-decoration: none;
+}
+
+.page-header {
+    padding: 3.5rem 0 2rem;
+    border-bottom: 1px solid var(--borde);
+}
+
+.page-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300;
+}
+
+.page-title em {
+    color: var(--rojo);
+}
+
+.filtros {
+    padding: 1.5rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-agregar {
+    font-family: 'Cinzel', serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--blanco);
+    background-color: var(--rojo);
+    border: none;
+    padding: 0.55rem 1.4rem;
+    cursor: pointer;
+}
+
+.biblioteca {
+    padding: 2rem 0 5rem;
+}
+
+.book-card {
+    background-color: var(--negro-suave);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    height: 100%;
+}
+
+.book-cover-placeholder {
+    width: 100%;
+    height: 200px;
+    background: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+}
+
+.book-body {
+    padding: 1.3rem;
+}
+
+.estado-badge {
+    font-size: 0.7rem;
+    padding: 5px 10px;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.estado-leido {
+    background: green;
+}
+
+.estado-leyendo {
+    background: orange;
+}
+
+.estado-pendiente {
+    background: gray;
+}
+
+.book-title {
+    font-size: 1.2rem;
+}
+
+.book-author {
+    color: var(--gris);
+}
+
+.book-actions {
+    padding: 1rem;
+    display: flex;
+    gap: 10px;
+}
+
+.btn-accion {
+    text-decoration: none;
+    color: white;
+    border: 1px solid white;
+    padding: 5px 10px;
+    flex: 1;
+    text-align: center;
+    background: transparent;
+    cursor: pointer;
+}
+
+.danger {
+    border-color: red;
+    color: red;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 4rem;
+}
+
+footer {
+    border-top: 1px solid var(--borde);
+    padding: 2rem;
+}

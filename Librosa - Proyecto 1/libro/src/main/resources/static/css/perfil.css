@@ -1,0 +1,125 @@
+:root {
+    --negro: #0a0a0a;
+    --negro-suave: #111111;
+    --rojo: #c0001a;
+    --rojo-hover: #e8001f;
+    --blanco: #f5f0eb;
+    --gris: #888888;
+    --borde: rgba(192, 0, 26, 0.2);
+}
+
+body {
+    background-color: var(--negro);
+    color: var(--blanco);
+    font-family: 'Lato', sans-serif;
+    min-height: 100vh;
+}
+
+.navbar {
+    background-color: rgba(10, 10, 10, 0.97);
+    border-bottom: 1px solid var(--borde);
+    padding: 1rem 2rem;
+}
+
+.navbar-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.7rem;
+    font-style: italic;
+    color: var(--blanco) !important;
+}
+
+.navbar-brand span {
+    color: var(--rojo);
+}
+
+.nav-link {
+    color: var(--gris) !important;
+}
+
+.nav-link:hover {
+    color: var(--blanco) !important;
+}
+
+.nav-user span {
+    color: var(--blanco);
+}
+
+.page-wrapper {
+    padding: 3rem 0;
+}
+
+.breadcrumb-lib {
+    color: var(--gris);
+    margin-bottom: 2rem;
+}
+
+.breadcrumb-lib a {
+    text-decoration: none;
+    color: var(--gris);
+}
+
+.breadcrumb-lib a:hover {
+    color: var(--blanco);
+}
+
+.page-title em {
+    color: var(--rojo);
+}
+
+.form-card {
+    background-color: var(--negro-suave);
+    border: 1px solid var(--borde);
+    padding: 2rem;
+}
+
+.form-control {
+    background-color: var(--negro);
+    color: var(--blanco);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.form-control:focus {
+    background-color: var(--negro);
+    color: var(--blanco);
+    border-color: var(--rojo);
+    box-shadow: none;
+}
+
+.form-control:disabled {
+    background-color: rgba(10, 10, 10, 0.6);
+    color: var(--gris);
+}
+
+.modo-badge {
+    border: 1px solid var(--borde);
+    padding: 5px 15px;
+    color: var(--gris);
+}
+
+.btn-primary-lib {
+    background-color: var(--rojo);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+}
+
+.btn-primary-lib:hover {
+    background-color: var(--rojo-hover);
+}
+
+.btn-secondary-lib {
+    background: transparent;
+    color: var(--gris);
+    border: 1px solid var(--gris);
+    padding: 10px 20px;
+}
+
+footer {
+    border-top: 1px solid var(--borde);
+    padding: 1.5rem;
+    margin-top: 3rem;
+}
+
+.footer-logo span {
+    color: var(--rojo);
+}

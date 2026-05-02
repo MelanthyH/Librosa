@@ -1,192 +1,106 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Librosa — Biblioteca General</title>
 
-  <!-- Bootstrap -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Lato:wght@300;400&display=swap" rel="stylesheet"/>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Lato:wght@300;400&display=swap"
+    rel="stylesheet" />
 
-  <style>
-    /* 🔴 (TU CSS ORIGINAL SIN CAMBIOS) */
-    :root {
-      --negro: #0a0a0a;
-      --negro-suave: #111111;
-      --rojo: #c0001a;
-      --rojo-hover: #e8001f;
-      --blanco: #f5f0eb;
-      --gris: #888888;
-      --borde: rgba(192, 0, 26, 0.2);
-    }
-
-    body {
-      background-color: var(--negro);
-      color: var(--blanco);
-      font-family: 'Lato', sans-serif;
-    }
-
-    .navbar {
-      background-color: rgba(10, 10, 10, 0.97);
-      border-bottom: 1px solid var(--borde);
-      padding: 1rem 2rem;
-    }
-
-    .navbar-brand {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.7rem;
-      font-style: italic;
-      color: var(--blanco) !important;
-    }
-
-    .navbar-brand span { color: var(--rojo); }
-
-    .nav-link {
-      font-family: 'Cinzel', serif;
-      font-size: 0.72rem;
-      color: var(--gris) !important;
-    }
-
-    .page-header {
-      padding: 3rem 0 1rem;
-      border-bottom: 1px solid var(--borde);
-    }
-
-    .page-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.5rem;
-    }
-
-    .page-title em { color: var(--rojo); font-style: italic; }
-
-    .filtros {
-      padding: 1.5rem 0;
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-    }
-
-    .filtro-btn {
-      font-family: 'Cinzel', serif;
-      font-size: 0.65rem;
-      padding: 0.4rem 1rem;
-      border: 1px solid rgba(255,255,255,0.1);
-      background: transparent;
-      color: var(--gris);
-      text-decoration: none;
-    }
-
-    .filtro-btn:hover {
-      border-color: var(--rojo);
-      color: var(--blanco);
-    }
-
-    .book-card {
-      background: var(--negro-suave);
-      border: 1px solid rgba(255,255,255,0.05);
-      height: 100%;
-      padding: 1rem;
-    }
-
-    .book-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.2rem;
-    }
-
-    .book-author {
-      color: var(--gris);
-      font-size: 0.8rem;
-    }
-
-    .book-genre {
-      font-family: 'Cinzel', serif;
-      font-size: 0.6rem;
-      color: var(--gris);
-    }
-  </style>
+  <link rel="stylesheet" th:href="@{/css/biblioteca-general.css}" />
 </head>
 
 <body>
 
-<!-- NAV -->
-<nav class="navbar navbar-expand-lg">
-  <div class="container">
-    <a class="navbar-brand" href="/">Lib<span>rosa</span></a>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand" href="/">Lib<span>rosa</span></a>
 
-    <div class="navbar-nav ms-auto">
-      <a class="nav-link" th:href="@{/usuarios/perfil}">Mi Perfil</a>
-      <a class="nav-link" th:href="@{/mi-biblioteca}">Mi Biblioteca</a>
-      <a class="nav-link" th:href="@{/biblioteca-general}">General</a>
-    </div>
-  </div>
-</nav>
-
-<!-- HEADER -->
-<div class="page-header">
-  <div class="container">
-    <h1 class="page-title">Biblioteca <em>General</em></h1>
-  </div>
-</div>
-
-<!-- FILTROS -->
-<div class="container">
-  <div class="filtros">
-
-    <a th:href="@{/biblioteca-general}" class="filtro-btn">
-      Todos
-    </a>
-
-    <a th:each="cat : ${categorias}"
-       th:href="@{/biblioteca-general(categoriaId=${cat.id})}"
-       th:text="${cat.nombreCategoria}"
-       class="filtro-btn">
-    </a>
-
-  </div>
-</div>
-
-<!-- LIBROS -->
-<section class="container pb-5">
-
-  <div class="row g-3">
-
-    <div class="col-md-4 col-lg-3" th:each="libro : ${libros}">
-      <div class="book-card">
-
-        <h3 class="book-title" th:text="${libro.titulo}"></h3>
-        <p class="book-author" th:text="${libro.autor}"></p>
-        <p class="book-genre" th:text="${libro.categoria.nombreCategoria}"></p>
-
-        <p style="font-size:0.8rem" th:text="${libro.descripcion}"></p>
-
-       <form th:action="@{/biblioteca-general/agregar}" method="post">
-
-  <input type="hidden" name="libroId" th:value="${libro.id}" />
-
-  <button class="btn btn-sm btn-outline-light w-100 mt-2">
-    + Agregar a mi biblioteca
-  </button>
-
-</form>
+      <div class="navbar-nav ms-auto">
+        <a class="nav-link" th:href="@{/usuarios/perfil}">Mi Perfil</a>
+        <a class="nav-link" th:href="@{/mi-biblioteca}">Mi Biblioteca</a>
+        <a class="nav-link" th:href="@{/biblioteca-general}">General</a>
       </div>
     </div>
+  </nav>
 
+  <div class="page-header">
+    <div class="container">
+      <h1 class="page-title">Biblioteca <em>General</em></h1>
+    </div>
   </div>
 
-  <!-- VACÍO -->
-  <div class="text-center mt-5"
-       th:if="${#lists.isEmpty(libros)}">
+  <div class="container">
+    <div class="filtros">
 
-    <h3 style="color: var(--gris); font-family: 'Cormorant Garamond';">
-      No hay libros disponibles
-    </h3>
+      <a th:href="@{/biblioteca-general}" class="filtro-btn">
+        Todos
+      </a>
 
+      <a th:each="cat : ${categorias}" th:href="@{/biblioteca-general(categoriaId=${cat.id})}"
+        th:text="${cat.nombreCategoria}" class="filtro-btn">
+      </a>
+
+    </div>
   </div>
 
-</section>
+  <div class="container my-4">
+    <h2 style="font-family:'Cormorant Garamond',serif; font-size:1.8rem;">
+      Sugerencias <em style="color:var(--rojo); font-style:italic;">externas</em>
+    </h2>
+    <form th:action="@{/sugerencias-externas/buscar}" method="get" class="d-flex gap-2 mt-3">
+      <input type="text" name="tema" placeholder="Ej: aventura, romance, historia..." style="background:var(--negro-suave); border:1px solid var(--borde);
+                  color:var(--blanco); padding:0.4rem 1rem; flex:1; outline:none;" />
+      <button type="submit" style="font-family:'Cinzel',serif; font-size:0.65rem;
+                   padding:0.4rem 1.2rem; background:var(--rojo);
+                   color:var(--blanco); border:none; cursor:pointer;">
+        BUSCAR
+      </button>
+    </form>
+  </div>
+
+  <section class="container pb-5">
+
+    <div class="row g-3">
+
+      <div class="col-md-4 col-lg-3" th:each="libro : ${libros}">
+        <div class="book-card">
+
+          <h3 class="book-title" th:text="${libro.titulo}"></h3>
+          <p class="book-author" th:text="${libro.autor}"></p>
+          <p class="book-genre" th:text="${libro.categoria.nombreCategoria}"></p>
+
+          <p style="font-size:0.8rem" th:text="${libro.descripcion}"></p>
+
+          <form th:action="@{/biblioteca-general/agregar}" method="post">
+
+            <input type="hidden" name="libroId" th:value="${libro.id}" />
+
+            <button class="btn btn-sm btn-outline-light w-100 mt-2">
+              + Agregar a mi biblioteca
+            </button>
+
+          </form>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="text-center mt-5" th:if="${#lists.isEmpty(libros)}">
+
+      <h3 style="color: var(--gris); font-family: 'Cormorant Garamond';">
+        No hay libros disponibles
+      </h3>
+
+    </div>
+
+  </section>
 
 </body>
+
 </html>

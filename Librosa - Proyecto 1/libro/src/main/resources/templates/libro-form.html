@@ -1,110 +1,93 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <meta charset="UTF-8">
   <title>Libro — Admin</title>
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
-
-  <style>
-    :root {
-      --negro: #0a0a0a;
-      --negro-suave: #111;
-      --rojo: #c0001a;
-      --rojo-hover: #e8001f;
-      --blanco: #f5f0eb;
-      --gris: #888;
-    }
-
-    body {
-      background: var(--negro);
-      color: var(--blanco);
-      font-family: sans-serif;
-    }
-
-    .card-lib {
-      background: var(--negro-suave);
-      border: 1px solid rgba(255,255,255,0.05);
-      padding: 2rem;
-    }
-
-    .form-control, .form-select {
-      background: var(--negro);
-      color: var(--blanco);
-      border: 1px solid rgba(255,255,255,0.1);
-    }
-
-    .btn-primary-lib {
-      background: var(--rojo);
-      border: none;
-      color: white;
-      padding: 10px 20px;
-    }
-
-    .btn-primary-lib:hover {
-      background: var(--rojo-hover);
-    }
-  </style>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" th:href="@{/css/libro-form.css}">
 </head>
+
 <body>
 
-<div class="container mt-5">
-  <div class="card-lib">
+  <div class="container mt-5">
+    <div class="card-lib">
 
-    <h2 class="mb-4">
-      <span th:text="${libro.id == 0} ? 'Nuevo libro' : 'Editar libro'"></span>
-    </h2>
+      <h2 class="mb-4">
+        <span th:text="${libro.id == 0} ? 'Nuevo libro' : 'Editar libro'"></span>
+      </h2>
 
-    <form th:action="@{/libros/guardar}" th:object="${libro}" method="post">
+      <form th:action="@{/libros/guardar}" th:object="${libro}" method="post">
 
-      <input type="hidden" th:field="*{id}" />
+        <input type="hidden" th:field="*{id}" />
 
-      <!-- TITULO -->
-      <div class="mb-3">
-        <label>Título</label>
-        <input type="text" th:field="*{titulo}" class="form-control" required>
+        <div class="mb-3">
+          <label>Título</label>
+          <input type="text" th:field="*{titulo}" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+          <label>Autor</label>
+          <input type="text" th:field="*{autor}" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+          <label>Descripción</label>
+          <textarea th:field="*{descripcion}" class="form-control"></textarea>
+        </div>
+
+        <div class="mb-4">
+          <label>Categoría</label>
+
+          <select th:field="*{categoria}" class="form-select" required>
+            <option value="">Seleccione una categoría</option>
+
+            <option th:each="c : ${categorias}" th:value="${c.id}" th:text="${c.nombreCategoria}">
+            </option>
+
+          </select>
+        </div>
+
+        <button type="submit" class="btn-primary-lib">
+          Guardar
+        </button>
+
+        <a href="/admin/dashboard" class="btn btn-secondary">
+          Cancelar
+        </a>
+
+      </form>
+
+    </div>
+    <div th:if="${not #lists.isEmpty(sugerencias)}" class="mt-5">
+      <hr style="border-color: rgba(255,255,255,0.1);" />
+      <h4 style="font-family: sans-serif; color: var(--gris); margin-bottom: 1rem;">
+        💡 Sugerencias de libros para agregar
+      </h4>
+
+      <div class="row g-3">
+        <div class="col-md-4" th:each="s : ${sugerencias}">
+          <div style="background: var(--negro); border: 1px solid rgba(255,255,255,0.07);
+                  padding: 0.8rem; height: 100%;">
+
+            <img th:if="${s.portada != null}" th:src="${s.portada}" alt="portada"
+              style="width:100%; height:120px; object-fit:cover; margin-bottom:0.5rem;" />
+            <div th:if="${s.portada == null}" style="width:100%; height:120px; background:#1a1a1a;
+                    display:flex; align-items:center; justify-content:center;
+                    color:var(--gris); font-size:0.7rem; margin-bottom:0.5rem;">
+              Sin portada
+            </div>
+
+            <p style="margin:0; font-size:0.9rem;" th:text="${s.titulo}"></p>
+            <p style="margin:0; font-size:0.75rem; color:var(--gris);" th:text="${s.autor}"></p>
+            <p style="margin:0; font-size:0.65rem; color:var(--rojo);" th:text="${s.categoria}"></p>
+          </div>
+        </div>
       </div>
-
-      <!-- AUTOR -->
-      <div class="mb-3">
-        <label>Autor</label>
-        <input type="text" th:field="*{autor}" class="form-control" required>
-      </div>
-
-      <!-- DESCRIPCIÓN -->
-      <div class="mb-3">
-        <label>Descripción</label>
-        <textarea th:field="*{descripcion}" class="form-control"></textarea>
-      </div>
-
-      <!-- CATEGORÍA -->
-      <div class="mb-4">
-        <label>Categoría</label>
-
-        <select th:field="*{categoria}" class="form-select" required>
-          <option value="">Seleccione una categoría</option>
-
-          <option th:each="c : ${categorias}"
-                  th:value="${c.id}"
-                  th:text="${c.nombreCategoria}">
-          </option>
-
-        </select>
-      </div>
-
-      <!-- BOTONES -->
-      <button type="submit" class="btn-primary-lib">
-        Guardar
-      </button>
-
-      <a href="/admin/dashboard" class="btn btn-secondary">
-        Cancelar
-      </a>
-
-    </form>
-
+    </div>
   </div>
-</div>
 
 </body>
+
 </html>

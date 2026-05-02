@@ -1,0 +1,38 @@
+:root {
+    --negro: #0a0a0a;
+    --negro-suave: #111;
+    --rojo: #c0001a;
+    --rojo-hover: #e8001f;
+    --blanco: #f5f0eb;
+    --gris: #888;
+}
+
+body {
+    background: var(--negro);
+    color: var(--blanco);
+    font-family: sans-serif;
+}
+
+.card-lib {
+    background: var(--negro-suave);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 2rem;
+}
+
+.form-control,
+.form-select {
+    background: var(--negro);
+    color: var(--blanco);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-primary-lib {
+    background: var(--rojo);
+    border: none;
+    color: white;
+    padding: 10px 20px;
+}
+
+.btn-primary-lib:hover {
+    background: var(--rojo-hover);
+}

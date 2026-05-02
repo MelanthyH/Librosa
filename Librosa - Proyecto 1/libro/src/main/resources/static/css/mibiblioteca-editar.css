@@ -1,0 +1,33 @@
+body {
+    background: #0a0a0a;
+    color: #f5f0eb;
+    font-family: Arial;
+}
+
+.card-form {
+    background: #111;
+    padding: 2rem;
+    border-radius: 12px;
+    max-width: 600px;
+    margin: 3rem auto;
+    border: 1px solid #333;
+}
+
+label {
+    margin-top: 1rem;
+}
+
+.btn-primary {
+    background: #c0001a;
+    border: none;
+    margin-top: 1.5rem;
+    width: 100%;
+}
+
+.info-libro {
+    padding: 0.8rem;
+    background: #1a1a1a;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    border: 1px solid #333;
+}

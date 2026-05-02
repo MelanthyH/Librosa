@@ -45,7 +45,7 @@ public class LibroController {
     // 🔥 GUARDAR
     @PostMapping("/guardar")
     public String guardarLibro(@ModelAttribute Libro libro,
-                               HttpSession session) {
+            HttpSession session) {
 
         Usuario usuario = (Usuario) session.getAttribute("usuario");
 
@@ -61,8 +61,8 @@ public class LibroController {
     // 🔥 EDITAR
     @GetMapping("/{id}/editar")
     public String editar(@PathVariable int id,
-                         HttpSession session,
-                         Model model) {
+            HttpSession session,
+            Model model) {
 
         Usuario usuario = (Usuario) session.getAttribute("usuario");
 
@@ -82,7 +82,7 @@ public class LibroController {
     // 🔥 ELIMINAR
     @GetMapping("/{id}/eliminar")
     public String eliminar(@PathVariable int id,
-                           HttpSession session) {
+            HttpSession session) {
 
         Usuario usuario = (Usuario) session.getAttribute("usuario");
 

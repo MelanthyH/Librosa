@@ -11,25 +11,25 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class LibroService {
-    
+
     private LibroRepository libroRepository;
-    
+
     public Libro add(Libro libro) {
         return libroRepository.save(libro);
     }
-    
+
     public List<Libro> obtenerTodos() {
         return libroRepository.findAll();
     }
-    
+
     public Optional<Libro> obtenerPorId(int id) {
         return libroRepository.findById(id);
     }
-    
+
     public List<Libro> obtenerPorCategoria(int categoriaId) {
         return libroRepository.findByCategoria_Id(categoriaId);
     }
-    
+
     public Libro actualizar(int id, Libro libro) {
         Optional<Libro> existente = libroRepository.findById(id);
         if (existente.isPresent()) {
@@ -43,7 +43,7 @@ public class LibroService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Libro no encontrado");
         }
     }
-    
+
     public void eliminar(int id) {
         libroRepository.deleteById(id);
     }

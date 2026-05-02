@@ -56,8 +56,8 @@ public class CategoriaController {
     // 🔥 EDITAR
     @GetMapping("/{id}/editar")
     public String editar(@PathVariable int id,
-                         HttpSession session,
-                         Model model) {
+            HttpSession session,
+            Model model) {
 
         Usuario usuario = (Usuario) session.getAttribute("usuario");
 
@@ -66,8 +66,8 @@ public class CategoriaController {
         }
 
         Categoria genero = categoriaService.obtenerPorId(id)
-                .orElseThrow(() ->
-                        new ResponseStatusException(HttpStatus.NOT_FOUND, "Género no encontrado"));
+                .orElseThrow(()
+                        -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Género no encontrado"));
 
         model.addAttribute("genero", genero);
 
@@ -77,7 +77,7 @@ public class CategoriaController {
     // 🔥 GUARDAR
     @PostMapping("/guardar")
     public String guardar(@ModelAttribute Categoria categoria,
-                          HttpSession session) {
+            HttpSession session) {
 
         Usuario usuario = (Usuario) session.getAttribute("usuario");
 
@@ -97,7 +97,7 @@ public class CategoriaController {
     // 🔥 ELIMINAR
     @GetMapping("/{id}/eliminar")
     public String eliminar(@PathVariable int id,
-                           HttpSession session) {
+            HttpSession session) {
 
         Usuario usuario = (Usuario) session.getAttribute("usuario");
 

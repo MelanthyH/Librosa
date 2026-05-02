@@ -1,310 +1,30 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Librosa — Tu biblioteca personal</title>
 
-  <!-- Bootstrap 5 -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Lato:wght@300;400&display=swap" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Lato:wght@300;400&display=swap"
+    rel="stylesheet" />
 
-  <style>
-    :root {
-      --negro: #0a0a0a;
-      --negro-suave: #111111;
-      --rojo: #c0001a;
-      --rojo-hover: #e8001f;
-      --blanco: #f5f0eb;
-      --gris: #888888;
-      --borde: rgba(192, 0, 26, 0.2);
-    }
-
-    body {
-      background-color: var(--negro);
-      color: var(--blanco);
-      font-family: 'Lato', sans-serif;
-      font-weight: 300;
-    }
-
-    /* ── NAVBAR ── */
-    .navbar {
-      background-color: rgba(10, 10, 10, 0.97);
-      border-bottom: 1px solid var(--borde);
-      padding: 1rem 2rem;
-    }
-
-    .navbar-brand {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.7rem;
-      font-style: italic;
-      color: var(--blanco) !important;
-    }
-
-    .navbar-brand span { color: var(--rojo); }
-
-    .navbar-brand img {
-      height: 40px;
-      margin-right: 0.5rem;
-    }
-
-    .nav-link {
-      font-family: 'Cinzel', serif;
-      font-size: 0.72rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--gris) !important;
-      transition: color 0.3s;
-    }
-
-    .nav-link:hover { color: var(--blanco) !important; }
-
-    .navbar-toggler {
-      border-color: var(--borde);
-    }
-
-    .navbar-toggler-icon {
-      filter: invert(1);
-    }
-
-    .btn-nav {
-      font-family: 'Cinzel', serif;
-      font-size: 0.72rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--blanco);
-      background-color: var(--rojo);
-      border: none;
-      padding: 0.5rem 1.4rem;
-      text-decoration: none;
-      transition: background-color 0.3s;
-    }
-
-    .btn-nav:hover {
-      background-color: var(--rojo-hover);
-      color: var(--blanco);
-    }
-
-    /* ── HERO ── */
-    .hero {
-      min-height: 90vh;
-      display: flex;
-      align-items: center;
-      background: radial-gradient(ellipse 70% 70% at 60% 50%, rgba(192,0,26,0.07) 0%, transparent 70%), var(--negro);
-      padding: 6rem 0 4rem;
-    }
-
-    .hero-label {
-      font-family: 'Cinzel', serif;
-      font-size: 0.65rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--rojo);
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .hero-label::before {
-      content: '';
-      width: 35px;
-      height: 1px;
-      background: var(--rojo);
-    }
-
-    .hero-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(3rem, 6vw, 5.5rem);
-      font-weight: 300;
-      line-height: 1.08;
-      margin-bottom: 1rem;
-    }
-
-    .hero-title em {
-      font-style: italic;
-      color: var(--rojo);
-    }
-
-    .hero-subtitle {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.3rem;
-      font-style: italic;
-      color: var(--gris);
-      margin-bottom: 1.5rem;
-    }
-
-    .hero-desc {
-      font-size: 0.95rem;
-      line-height: 1.8;
-      color: rgba(245, 240, 235, 0.6);
-      max-width: 500px;
-      margin-bottom: 2.5rem;
-    }
-
-    .btn-primary-lib {
-      font-family: 'Cinzel', serif;
-      font-size: 0.72rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--blanco);
-      background-color: var(--rojo);
-      border: none;
-      padding: 0.9rem 2.2rem;
-      text-decoration: none;
-      display: inline-block;
-      transition: background-color 0.3s;
-    }
-
-    .btn-primary-lib:hover {
-      background-color: var(--rojo-hover);
-      color: var(--blanco);
-    }
-
-    .btn-secondary-lib {
-      font-family: 'Cinzel', serif;
-      font-size: 0.72rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--gris);
-      background: transparent;
-      border: 1px solid rgba(136,136,136,0.35);
-      padding: 0.9rem 2.2rem;
-      text-decoration: none;
-      display: inline-block;
-      transition: all 0.3s;
-    }
-
-    .btn-secondary-lib:hover {
-      color: var(--blanco);
-      border-color: var(--blanco);
-    }
-
-    /* ── SECCIÓN FUNCIONES ── */
-    .funciones {
-      padding: 6rem 0;
-      background-color: var(--negro);
-    }
-
-    .section-label {
-      font-family: 'Cinzel', serif;
-      font-size: 0.65rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--rojo);
-      display: block;
-      margin-bottom: 0.8rem;
-    }
-
-    .section-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-      font-weight: 300;
-      line-height: 1.2;
-      margin-bottom: 3rem;
-    }
-
-    .section-title em { font-style: italic; color: var(--rojo); }
-
-    .feature-card {
-      background-color: var(--negro-suave);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      padding: 2.2rem 2rem;
-      height: 100%;
-      transition: border-color 0.3s, background-color 0.3s;
-      position: relative;
-    }
-
-    .feature-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: var(--rojo);
-      transform: scaleX(0);
-      transition: transform 0.35s;
-    }
-
-    .feature-card:hover::before { transform: scaleX(1); }
-
-    .feature-card:hover {
-      background-color: rgba(192, 0, 26, 0.05);
-      border-color: var(--borde);
-    }
-
-    .feature-icon {
-      font-size: 1.6rem;
-      margin-bottom: 1rem;
-      display: block;
-    }
-
-    .feature-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.3rem;
-      font-weight: 400;
-      margin-bottom: 0.7rem;
-    }
-
-    .feature-desc {
-      font-size: 0.88rem;
-      line-height: 1.8;
-      color: rgba(245, 240, 235, 0.55);
-      margin: 0;
-    }
-
-    /* ── CTA FINAL ── */
-    .cta-section {
-      padding: 7rem 0;
-      background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(192,0,26,0.07) 0%, transparent 70%), var(--negro-suave);
-      border-top: 1px solid var(--borde);
-      text-align: center;
-    }
-
-    .cta-quote {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.2rem;
-      font-style: italic;
-      color: var(--gris);
-      margin-bottom: 2.5rem;
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      background-color: var(--negro);
-      border-top: 1px solid var(--borde);
-      padding: 2rem 2rem;
-    }
-
-    .footer-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.1rem;
-      font-style: italic;
-      color: var(--gris);
-      margin: 0;
-    }
-
-    .footer-logo span { color: var(--rojo); }
-
-    .footer-text {
-      font-size: 0.75rem;
-      color: rgba(136, 136, 136, 0.5);
-      margin: 0;
-    }
-  </style>
+  <head>
+    <link rel="stylesheet" href="/css/index.css">
+  </head>
 </head>
+
 <body>
 
-  <!-- NAVBAR -->
   <nav class="navbar navbar-expand-lg sticky-top">
     <div class="container">
       <a class="navbar-brand" href="#">
-        <img src="logo_fondo_negro.jpeg" alt="Librosa"
-             onerror="this.style.display='none'"/>
+        <img src="/img/logo_sin_fondo.png" alt="Librosa" style="height:45px; width:auto; margin-right:0.5rem;" />
         Lib<span>rosa</span>
       </a>
-      <button class="navbar-toggler" type="button"
-              data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navMenu">
@@ -319,21 +39,20 @@
     </div>
   </nav>
 
-  <!-- HERO -->
   <section class="nosotros" id="nosotros">
     <div class="container">
       <div class="row align-items-center">
         <div class="col-lg-7">
           <p class="hero-label">Tu biblioteca personal, digitalizada</p>
           <h1 class="hero-title">
-            Cada libro<br/>
-            tiene su <em>historia.</em><br/>
-            Cuéntala.
+            Cada libro<br />
+            tiene su <em>historia.</em><br />
+            Descúbrela.
           </h1>
           <p class="hero-subtitle">Organiza, recuerda y descubre tus lecturas.</p>
           <p class="hero-desc">
-            Librosa es el espacio donde tu colección de libros cobra vida digital.
-            Registra lo que has leído, lo que estás leyendo y lo que sueñas con leer.
+            Librosa es el espacio donde tu colección de libros cobra sentido digital.
+            Registra lo que has leído, lo que estás leyendo y lo que te gustaría leer.
             Todo en un solo lugar, siempre contigo.
           </p>
           <div class="d-flex gap-3 flex-wrap">
@@ -345,73 +64,58 @@
     </div>
   </section>
 
-  <!-- FUNCIONES -->
   <section class="funciones" id="funciones">
     <div class="container">
       <div class="text-center mb-5">
         <span class="section-label">¿Qué ofrece Librosa?</span>
-        <h2 class="section-title">Funciones pensadas<br/>para el <em>lector real</em></h2>
       </div>
       <div class="row g-3">
         <div class="col-md-6 col-lg-4">
           <div class="feature-card">
             <span class="feature-icon">📚</span>
             <h3 class="feature-title">Tu biblioteca digital</h3>
-            <p class="feature-desc">Registra cualquier libro de tu colección. Título, autor, género y más. Sin límites ni catálogos predefinidos.</p>
+            <p class="feature-desc">Registra cualquier libro de tu colección. Título, autor y género. Sin límites
+              ni catálogos predefinidos.</p>
           </div>
         </div>
         <div class="col-md-6 col-lg-4">
           <div class="feature-card">
             <span class="feature-icon">🔖</span>
             <h3 class="feature-title">Estados de lectura</h3>
-            <p class="feature-desc">Organiza tus libros en tres estados: Leído, En proceso y Pendiente. Actualiza tu progreso página a página.</p>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-4">
-          <div class="feature-card">
-            <span class="feature-icon">✒️</span>
-            <h3 class="feature-title">Notas privadas</h3>
-            <p class="feature-desc">Escribe reseñas y reflexiones personales sobre cada libro. Solo tú puedes verlas. Tu espacio, tus palabras.</p>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-4">
-          <div class="feature-card">
-            <span class="feature-icon">🌹</span>
-            <h3 class="feature-title">Recomendaciones</h3>
-            <p class="feature-desc">Librosa analiza los géneros que más lees y te sugiere títulos que podrían conquistarte.</p>
+            <p class="feature-desc">Organiza tus libros en tres estados: Leído, En proceso y Pendiente. Actualiza tu
+              progreso página a página.</p>
           </div>
         </div>
         <div class="col-md-6 col-lg-4">
           <div class="feature-card">
             <span class="feature-icon">🗂️</span>
             <h3 class="feature-title">Géneros y categorías</h3>
-            <p class="feature-desc">Clasifica tu colección por género literario. Fantasía, Romance, Terror, Clásicos — encuentra cualquier libro en segundos.</p>
+            <p class="feature-desc">Clasifica tu colección por género literario. Fantasía, Romance, Terror, Clásicos —
+              encuentra cualquier libro en segundos.</p>
           </div>
         </div>
         <div class="col-md-6 col-lg-4">
           <div class="feature-card">
             <span class="feature-icon">🔒</span>
             <h3 class="feature-title">Acceso seguro</h3>
-            <p class="feature-desc">Tu biblioteca es tuya y solo tuya. Acceso protegido con tokens de sesión JWT.</p>
+            <p class="feature-desc">Tu biblioteca es tuya y solo tuya.</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- CTA FINAL -->
   <section class="cta-section">
     <div class="container">
       <span class="section-label d-block text-center mb-2">Únete a Librosa</span>
       <h2 class="section-title text-center">
-        ¿Lista para conocer<br/>tu <em>biblioteca ideal?</em>
+        ¿Lista para conocer<br />tu <em>biblioteca ideal?</em>
       </h2>
       <p class="cta-quote">"Los libros son espejos. Solo ves en ellos lo que ya llevas dentro."</p>
       <a href="/usuarios/registro" class="btn-primary-lib">Crear mi cuenta</a>
     </div>
   </section>
 
-  <!-- FOOTER -->
   <footer>
     <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
       <p class="footer-logo">Lib<span>rosa</span></p>
@@ -419,8 +123,8 @@
     </div>
   </footer>
 
-  <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
+
 </html>

@@ -20,7 +20,6 @@ public class BibliotecaController {
     @Autowired
     private BibliotecaPersonalService bibliotecaService;
 
-
     // 🔥 OBTENER BIBLIOTECA DESDE SESIÓN
     @GetMapping
     public String mostrarBiblioteca(HttpSession session, Model model) {
@@ -31,8 +30,8 @@ public class BibliotecaController {
             return "redirect:/usuarios/login";
         }
 
-        List<BibliotecaPersonal> libros =
-                bibliotecaService.obtenerLibrosPorUsuario(usuario.getId());
+        List<BibliotecaPersonal> libros
+                = bibliotecaService.obtenerLibrosPorUsuario(usuario.getId());
 
         model.addAttribute("todos", libros);
         model.addAttribute("usuario", usuario);
@@ -41,28 +40,29 @@ public class BibliotecaController {
     }
 
     // AGREGAR LIBRO (SESSION)
-   @PostMapping("/agregar")
-public String agregarLibro(@RequestParam int libroId,
-                           HttpSession session) {
+    @PostMapping("/agregar")
+    public String agregarLibro(@RequestParam int libroId,
+            HttpSession session) {
 
-    Usuario usuario = (Usuario) session.getAttribute("usuario");
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
 
-    if (usuario == null) {
-        return "redirect:/usuarios/login";
+        if (usuario == null) {
+            return "redirect:/usuarios/login";
+        }
+
+        // 🔥 debug opcional
+        System.out.println("LIBRO ID: " + libroId);
+        System.out.println("USUARIO ID: " + usuario.getId());
+
+        bibliotecaService.agregarLibro(libroId, usuario.getId());
+
+        return "redirect:/mi-biblioteca";
     }
 
-    // 🔥 debug opcional
-    System.out.println("LIBRO ID: " + libroId);
-    System.out.println("USUARIO ID: " + usuario.getId());
-
-    bibliotecaService.agregarLibro(libroId, usuario.getId());
-
-    return "redirect:/mi-biblioteca";
-}
     // ELIMINAR
     @PostMapping("/{id}/eliminar")
     public String eliminar(@PathVariable int id,
-                           HttpSession session) {
+            HttpSession session) {
 
         Usuario usuario = (Usuario) session.getAttribute("usuario");
 
@@ -74,51 +74,53 @@ public String agregarLibro(@RequestParam int libroId,
 
         return "redirect:/mi-biblioteca";
     }
+
     @GetMapping("/{id}/editar")
-public String editarFormulario(@PathVariable int id,
-                               HttpSession session,
-                               Model model) {
+    public String editarFormulario(@PathVariable int id,
+            HttpSession session,
+            Model model) {
 
-    Usuario usuario = (Usuario) session.getAttribute("usuario");
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
 
-    if (usuario == null) {
-        return "redirect:/usuarios/login";
+        if (usuario == null) {
+            return "redirect:/usuarios/login";
+        }
+
+        BibliotecaPersonal registro = bibliotecaService.obtenerPorId(id);
+
+        // 🔒 seguridad: evitar editar registros de otro usuario
+        if (registro == null || registro.getUsuario().getId() != usuario.getId()) {
+            return "redirect:/mi-biblioteca";
+        }
+
+        model.addAttribute("registro", registro);
+        model.addAttribute("usuario", usuario);
+
+        return "mibiblioteca-editar";
     }
 
-    BibliotecaPersonal registro = bibliotecaService.obtenerPorId(id);
+    @PostMapping("/{id}/actualizar")
+    public String actualizarRegistro(@PathVariable int id,
+            @RequestParam String estado,
+            @RequestParam(required = false) Integer paginaActual,
+            @RequestParam(required = false) String notas,
+            HttpSession session) {
 
-    // 🔒 seguridad: evitar editar registros de otro usuario
-    if (registro == null || registro.getUsuario().getId() != usuario.getId()) {
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+
+        if (usuario == null) {
+            return "redirect:/usuarios/login";
+        }
+
+        BibliotecaPersonal registro = bibliotecaService.obtenerPorId(id);
+
+        // 🔒 seguridad
+        if (registro == null || registro.getUsuario().getId() != usuario.getId()) {
+            return "redirect:/mi-biblioteca";
+        }
+
+        bibliotecaService.actualizarRegistro(id, estado, paginaActual, notas);
+
         return "redirect:/mi-biblioteca";
     }
-
-    model.addAttribute("registro", registro);
-    model.addAttribute("usuario", usuario);
-
-    return "mibiblioteca-editar";
-}
-@PostMapping("/{id}/actualizar")
-public String actualizarRegistro(@PathVariable int id,
-                                 @RequestParam String estado,
-                                 @RequestParam(required = false) Integer paginaActual,
-                                 @RequestParam(required = false) String notas,
-                                 HttpSession session) {
-
-    Usuario usuario = (Usuario) session.getAttribute("usuario");
-
-    if (usuario == null) {
-        return "redirect:/usuarios/login";
-    }
-
-    BibliotecaPersonal registro = bibliotecaService.obtenerPorId(id);
-
-    // 🔒 seguridad
-    if (registro == null || registro.getUsuario().getId() != usuario.getId()) {
-        return "redirect:/mi-biblioteca";
-    }
-
-    bibliotecaService.actualizarRegistro(id, estado, paginaActual, notas);
-
-    return "redirect:/mi-biblioteca";
-}
 }

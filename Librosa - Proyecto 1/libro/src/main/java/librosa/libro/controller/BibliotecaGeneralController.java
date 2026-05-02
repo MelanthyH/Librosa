@@ -14,8 +14,6 @@ import librosa.libro.service.BibliotecaPersonalService;
 import librosa.libro.service.CategoriaService;
 import librosa.libro.service.LibroService;
 
-
-
 @Controller
 @RequestMapping("/biblioteca-general")
 public class BibliotecaGeneralController {
@@ -30,7 +28,7 @@ public class BibliotecaGeneralController {
     private BibliotecaPersonalService bibliotecaService;
 
     @GetMapping
-    public String mostrarBibliotecaGeneral(@RequestParam(required = false) Integer categoriaId,HttpSession session,Model model) {
+    public String mostrarBibliotecaGeneral(@RequestParam(required = false) Integer categoriaId, HttpSession session, Model model) {
 
         Usuario usuario = (Usuario) session.getAttribute("usuario");
 
@@ -51,7 +49,7 @@ public class BibliotecaGeneralController {
 
     @PostMapping("/agregar")
     public String agregarALibroteca(@RequestParam int libroId,
-                                    HttpSession session) {
+            HttpSession session) {
 
         Usuario usuario = (Usuario) session.getAttribute("usuario");
 

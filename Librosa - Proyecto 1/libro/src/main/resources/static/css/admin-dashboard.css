@@ -1,0 +1,357 @@
+:root {
+    --negro: #0a0a0a;
+    --negro-suave: #111111;
+    --rojo: #c0001a;
+    --rojo-hover: #e8001f;
+    --blanco: #f5f0eb;
+    --gris: #888888;
+    --borde: rgba(192, 0, 26, 0.2);
+}
+
+body {
+    background-color: var(--negro);
+    color: var(--blanco);
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+}
+
+.navbar {
+    background-color: rgba(10, 10, 10, 0.97);
+    border-bottom: 1px solid var(--borde);
+    padding: 1rem 2rem;
+}
+
+.navbar-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.7rem;
+    font-style: italic;
+    color: var(--blanco) !important;
+}
+
+.navbar-brand span {
+    color: var(--rojo);
+}
+
+.nav-link {
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gris) !important;
+    transition: color 0.3s;
+}
+
+.nav-link:hover {
+    color: var(--blanco) !important;
+}
+
+.nav-link.active {
+    color: var(--blanco) !important;
+}
+
+.navbar-toggler {
+    border-color: var(--borde);
+}
+
+.navbar-toggler-icon {
+    filter: invert(1);
+}
+
+.nav-user {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--gris);
+}
+
+.nav-user span {
+    color: var(--blanco);
+}
+
+.badge-admin {
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    background-color: var(--rojo);
+    color: var(--blanco);
+    padding: 0.25rem 0.6rem;
+}
+
+.page-wrapper {
+    padding: 3.5rem 0 5rem;
+}
+
+.breadcrumb-lib {
+    font-family: 'Cinzel', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gris);
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.breadcrumb-lib a {
+    color: var(--gris);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.breadcrumb-lib a:hover {
+    color: var(--blanco);
+}
+
+.breadcrumb-lib .sep {
+    color: var(--rojo);
+}
+
+.breadcrumb-lib .actual {
+    color: var(--blanco);
+}
+
+.page-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--borde);
+}
+
+.page-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--rojo);
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 0.8rem;
+}
+
+.page-label::before {
+    content: '';
+    width: 30px;
+    height: 1px;
+    background: var(--rojo);
+}
+
+.page-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-weight: 300;
+}
+
+.page-title em {
+    font-style: italic;
+    color: var(--rojo);
+}
+
+.stat-card {
+    background-color: var(--negro-suave);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 1.5rem;
+    height: 100%;
+}
+
+.stat-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gris);
+    margin-bottom: 0.5rem;
+}
+
+.stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem;
+    font-weight: 300;
+    color: var(--blanco);
+    line-height: 1;
+}
+
+.stat-number.accent {
+    color: var(--rojo);
+}
+
+.stat-sub {
+    font-size: 0.75rem;
+    color: var(--gris);
+    margin-top: 0.4rem;
+}
+
+.section-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gris);
+    margin-bottom: 1.2rem;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.admin-table thead tr {
+    border-bottom: 1px solid var(--borde);
+}
+
+.admin-table th {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gris);
+    padding: 0 0 0.8rem 0;
+    font-weight: 400;
+    text-align: left;
+}
+
+.admin-table td {
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    font-size: 0.88rem;
+    color: var(--blanco);
+    padding: 0.9rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    vertical-align: middle;
+}
+
+.admin-table tr:last-child td {
+    border-bottom: none;
+}
+
+.admin-table tbody tr:hover td {
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+.estado-badge {
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.6rem;
+    display: inline-block;
+}
+
+.estado-activo {
+    background: rgba(192, 0, 26, 0.15);
+    color: var(--rojo);
+    border: 1px solid rgba(192, 0, 26, 0.3);
+}
+
+.estado-inactivo {
+    background: rgba(136, 136, 136, 0.1);
+    color: var(--gris);
+    border: 1px solid rgba(136, 136, 136, 0.2);
+}
+
+.btn-primary-lib {
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--blanco);
+    background-color: var(--rojo);
+    border: none;
+    padding: 0.65rem 1.5rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s;
+}
+
+.btn-primary-lib:hover {
+    background-color: var(--rojo-hover);
+    color: var(--blanco);
+}
+
+.btn-ghost-lib {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gris);
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.4rem 0.9rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: border-color 0.3s, color 0.3s;
+}
+
+.btn-ghost-lib:hover {
+    border-color: var(--rojo);
+    color: var(--blanco);
+}
+
+.btn-danger-lib {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--rojo);
+    background: transparent;
+    border: 1px solid rgba(192, 0, 26, 0.3);
+    padding: 0.4rem 0.9rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-danger-lib:hover {
+    background-color: var(--rojo);
+    color: var(--blanco);
+}
+
+.admin-card {
+    background-color: var(--negro-suave);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.admin-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.section-divider {
+    border: none;
+    border-top: 1px solid var(--borde);
+    margin: 2.5rem 0;
+}
+
+footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 1.5rem 0;
+}
+
+.footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--gris);
+    margin: 0;
+}
+
+.footer-logo span {
+    color: var(--rojo);
+}
+
+.footer-text {
+    font-size: 0.75rem;
+    color: rgba(136, 136, 136, 0.5);
+    margin: 0;
+}
