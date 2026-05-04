@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -110,4 +111,53 @@ public class UsuarioController {
         return "redirect:/usuarios/perfil";
     }
 
+    @GetMapping("/{id}/editar")
+    public String editar(@PathVariable int id, Model model, HttpSession session) {
+        Usuario usuarioSesion = (Usuario) session.getAttribute("usuario");
+        if (usuarioSesion == null || !"admin".equalsIgnoreCase(usuarioSesion.getTipoUsuario())) {
+            return "redirect:/admin/dashboard";
+        }
+
+        Usuario usuario = usuarioService.obtenerPorId(id)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        model.addAttribute("usuario", usuario);
+        return "editar-usuario";
+    }
+
+    @PostMapping("/{id}/actualizar")
+    public String actualizarDesdeAdmin(@PathVariable int id,
+            @ModelAttribute Usuario usuario,
+            HttpSession session) {
+        Usuario usuarioSesion = (Usuario) session.getAttribute("usuario");
+        if (usuarioSesion == null || !"admin".equalsIgnoreCase(usuarioSesion.getTipoUsuario())) {
+            return "redirect:/admin/dashboard";
+        }
+
+        usuarioService.actualizar(id, usuario);
+        return "redirect:/admin/dashboard";
+    }
+
+    @PostMapping("/guardar")
+    public String guardar(@ModelAttribute Usuario usuario, HttpSession session) {
+        if (usuario.getId() == 0) {
+            // Es nuevo — registrar
+            usuarioService.registrar(usuario);
+        } else {
+            // Ya existe — actualizar
+            usuarioService.actualizar(usuario.getId(), usuario);
+        }
+        return "redirect:/admin/dashboard";
+    }
+
+    @GetMapping("/{id}/eliminar")
+    public String eliminar(@PathVariable int id, HttpSession session) {
+        Usuario usuarioSesion = (Usuario) session.getAttribute("usuario");
+        if (usuarioSesion == null || !"admin".equalsIgnoreCase(usuarioSesion.getTipoUsuario())) {
+            return "redirect:/admin/dashboard";
+        }
+
+        usuarioService.eliminar(id);
+        return "redirect:/admin/dashboard";
+    }
 }
